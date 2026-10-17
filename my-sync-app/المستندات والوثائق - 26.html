@@ -1,0 +1,667 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أرشيف المستندات والوثائق</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f6fa;--card:#fff;--tx:#1e2430;--mut:#6b7385;--bd:#dde2ec;--pr:#2459d6;--ok:#16a34a;--wr:#d97706;--er:#dc2626}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b1f2a;--tx:#e8ebf2;--mut:#9aa3b5;--bd:#2c3242;--pr:#6c93ff}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b1f2a;--tx:#e8ebf2;--mut:#9aa3b5;--bd:#2c3242;--pr:#6c93ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Cairo,Tahoma,Arial,sans-serif;font-size:15px}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+h1{font-size:18px;margin:0;flex:1;min-width:140px}
+button,.btn{font:inherit;background:var(--pr);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
+button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+button.dng{background:var(--er)}
+button.sm{padding:4px 9px;font-size:13px}
+main{max-width:1100px;margin:0 auto;padding:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;width:100%}
+.bar input,.bar select{width:auto;flex:1;min-width:120px}
+.bar #q{flex:3;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{height:130px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:34px;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.cb{padding:10px 12px;flex:1}
+.cb h3{margin:0 0 4px;font-size:16px}
+.m{color:var(--mut);font-size:13px;margin:2px 0}
+.ca{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--bd);flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:12px;border-radius:99px;padding:1px 9px;color:#fff;background:var(--mut)}
+.b-valid{background:var(--ok)}.b-soon{background:var(--wr)}.b-expired{background:var(--er)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+th,td{padding:8px 10px;border-bottom:1px solid var(--bd);text-align:right}
+.tw{overflow-x:auto}
+dialog{border:1px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);width:min(900px,95vw);max-height:92vh;padding:16px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.f4{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1.3fr;gap:10px}
+@media(max-width:700px){.f4{grid-template-columns:1fr 1fr}}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.f2{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--mut);display:block;margin-bottom:3px}
+.drop{border:2px dashed var(--bd);border-radius:10px;padding:16px;text-align:center;color:var(--mut);cursor:pointer;margin-top:10px}
+.drop.on{border-color:var(--pr);color:var(--pr)}
+.files{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.fi{position:relative;width:84px;height:84px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--bg)}
+.fi img{width:100%;height:100%;object-fit:cover}
+.fi b{position:absolute;top:2px;left:2px;background:var(--er);color:#fff;border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;cursor:pointer}
+.vimg{max-width:100%;border:1px solid var(--bd);border-radius:8px;margin:6px 0;display:block}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+input[dir=ltr],textarea[dir=ltr]{text-align:left}
+.th{width:100%;flex-direction:row;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ct{font-size:15px;line-height:1.7;color:var(--tx);direction:ltr;text-align:left;flex:none;max-width:58%;overflow-wrap:anywhere}
+.en{direction:ltr;text-align:left;unicode-bidi:plaintext}
+label.chip{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--bd);border-radius:99px;padding:3px 11px;margin:3px;cursor:pointer;color:var(--tx);font-size:13px}
+label.chip input{width:auto}
+.item{border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:10px}
+.ih{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.vt{margin:4px 0}.vt th{width:18%;text-align:right;color:var(--mut);font-weight:600}
+dialog form,#items{max-height:none}
+#stats{background:#0b0f19;padding:16px 14px;border-bottom:1px solid #1c2438}
+.sg{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:760px){.sg{grid-template-columns:1fr 1fr;gap:10px}}
+.sc{background:#141b2d;border:1px solid #232d47;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s,transform .15s;color:#fff}
+.sc:hover{border-color:#3b4c7a;transform:translateY(-1px)}
+.sc.on{border-color:#6c93ff}
+.si{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.sb{flex:1;min-width:0}
+.sl{color:#8fa0c0;font-size:14px;line-height:1.4}
+.sn{font-size:30px;font-weight:700;line-height:1.2;margin-top:2px}
+@media(max-width:760px){.sc{padding:12px;gap:10px}.si{width:42px;height:42px;font-size:19px}.sn{font-size:24px}.sl{font-size:12px}}
+#pvbar{flex-wrap:wrap}
+.pair{display:flex;gap:6mm;justify-content:center;align-items:flex-start;margin-top:8px}
+.page .pair img{max-width:49%;max-height:130mm;margin:0}
+.cards{display:flex;flex-wrap:wrap;gap:6mm;justify-content:center;margin-top:8mm}
+.page img.card85{width:85.6mm;height:54mm;max-width:none;max-height:none;margin:0;border:.3mm solid #aaa;object-fit:contain}
+.warn{background:rgba(245,158,11,.15);border:1px solid #f0b44c;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#lock{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;align-items:center;justify-content:center}
+body.locked #lock{display:flex}
+body.locked>*:not(#lock){display:none!important}
+.lbox{width:min(340px,90vw);text-align:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:8px;display:none;z-index:99}
+/* ===== الطباعة A4 ===== */
+#print{display:none}
+#print.pv{display:block;position:fixed;inset:0;overflow:auto;background:#888;z-index:50;padding:50px 0 20px}
+#pvbar{position:fixed;top:0;right:0;left:0;background:var(--card);padding:8px;display:none;gap:8px;z-index:60;justify-content:center}
+#pvbar.on{display:flex}
+.page{background:#fff;color:#000;width:210mm;min-height:297mm;margin:0 auto 12px;padding:14mm;direction:rtl}
+.page h2{margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid #2459d6;font-size:20px}
+.page table{background:#fff;border:1px solid #999}
+.page .pt th,.page th{width:18%;background:#eef1f8;width:30%}
+.page td,.page .pt th,.page th{border:1px solid #bbb;color:#000}
+.page.pdfpg{padding:6mm;display:flex;align-items:center;justify-content:center}
+.page.pdfpg img{max-width:100%;margin:0}
+.page.pf{display:flex;flex-direction:column}
+.page{position:relative}
+.pnum{position:absolute;left:0;right:0;bottom:5mm;text-align:center;font-size:13px;color:#333;direction:ltr}
+.page img{display:block;max-width:100%;max-height:150mm;object-fit:contain;margin:8px auto}
+@page{size:A4;margin:0}
+@media print{
+ body>*:not(#print){display:none!important}
+ #print{display:block!important;position:static!important;background:#fff!important;padding:0!important}
+ .page{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+}
+</style>
+</head>
+<body>
+<header>
+ <h1>📁 أرشيف المستندات والوثائق</h1>
+ <button onclick="openForm()">+ عنوان جديد</button>
+ <button class="sec" onclick="printSel()">🖨 طباعة المحدد</button>
+ <button class="sec" onclick="exportCSV()">CSV</button>
+ <button class="sec" onclick="backup()">نسخ احتياطي</button>
+ <button class="sec" onclick="$('imp').click()">استيراد</button>
+ <button class="sec" onclick="openS()">🔒 الأمان</button>
+ <button class="sec" onclick="toggleTheme()">🌓</button>
+ <input type="file" id="imp" accept=".json" hidden>
+</header>
+<section id="stats"><div class="sg">
+ <div class="sc" data-f="" onclick="statF('')"><div class="si" style="background:#eef0fb">📄</div><div class="sb"><div class="sl">إجمالي السجلات والملفات</div><div class="sn" id="s_all">0</div></div></div>
+ <div class="sc" data-f="valid" onclick="statF('valid')"><div class="si" style="background:#e8faf1">✅</div><div class="sb"><div class="sl">وثائق سارية الصلاحية</div><div class="sn" id="s_valid" style="color:#10b981">0</div></div></div>
+ <div class="sc" data-f="soon" onclick="statF('soon')"><div class="si" style="background:#fff8e1">⚠️</div><div class="sb"><div class="sl">قريبة الانتهاء (أقل من 30 يوماً)</div><div class="sn" id="s_soon" style="color:#f59e0b">0</div></div></div>
+ <div class="sc" data-f="expired" onclick="statF('expired')"><div class="si" style="background:#fdeaee">⛔</div><div class="sb"><div class="sl">وثائق منتهية الصلاحية</div><div class="sn" id="s_expired" style="color:#ef4444">0</div></div></div>
+</div></section>
+<main>
+ <div id="bk"></div>
+ <div class="bar">
+  <input id="q" type="search" placeholder="🔍 بحث في جميع الحقول...">
+  <select id="ft"><option value="">كل الأنواع</option></select>
+  <select id="fs"><option value="">كل الحالات</option><option value="valid">ساري</option><option value="soon">قارب على الانتهاء</option><option value="expired">منتهي</option><option value="none">بلا تاريخ انتهاء</option></select>
+  <input id="fd1" dir="ltr" inputmode="numeric" maxlength="10" placeholder="من dd-mm-yyyy" title="من تاريخ الإصدار" oninput="this.value=maskD(this.value)"><input id="fd2" dir="ltr" inputmode="numeric" maxlength="10" placeholder="إلى dd-mm-yyyy" title="إلى تاريخ الإصدار" oninput="this.value=maskD(this.value)">
+  <select id="so"><option value="new">الأحدث</option><option value="old">الأقدم</option><option value="az">أبجديًا</option></select>
+  <button class="sec" id="vw" onclick="toggleView()">▦ / ☰</button>
+ </div>
+ <div class="m" id="cnt"></div>
+ <div class="m" id="mode" style="margin-bottom:6px"></div>
+ <div id="list"></div>
+</main>
+
+<dialog id="dlg">
+ <h3 id="dt" style="margin-top:0">ملف جديد</h3>
+ <div class="f4"><div><label>العنوان الرئيسي (مثال: اسمي) *</label><input id="f_title"></div>
+ <div><label>Title in English</label><input id="f_title_en" dir="ltr"></div>
+ <div><label>رقم الموبايل / Mobile</label><input id="f_phone" type="tel" dir="ltr" oninput="this.value=toEn(this.value)" placeholder="+971 50 000 0000"></div>
+ <div><label>البريد الإلكتروني / Email</label><input id="f_email" type="email" dir="ltr" placeholder="name@example.com"></div>
+</div>
+ <h4 style="margin:14px 0 0">الوثائق تحت هذا العنوان</h4>
+ <div id="items"></div>
+ <datalist id="types"></datalist><datalist id="types_en"></datalist>
+ <input type="file" id="fin" multiple accept="application/pdf,image/jpeg,image/png" hidden>
+ <div class="row" style="justify-content:space-between"><button class="sec" onclick="addItem()">+ إضافة وثيقة (هوية، جواز، رخصة...)</button>
+ <span style="display:flex;gap:8px"><button class="sec" onclick="$('dlg').close()">إلغاء</button><button onclick="save()">حفظ</button></span></div>
+</dialog>
+
+<dialog id="vdlg"><div id="vbody"></div><div class="row"><button class="sec" onclick="$('vdlg').close()">إغلاق</button></div></dialog>
+
+<dialog id="adlg" style="width:min(420px,92vw)"><p id="amsg" style="margin-top:0;white-space:pre-line"></p><input id="ain" style="display:none" autocomplete="off"><div class="row"><button class="sec" id="ano">إلغاء</button><button id="aok">موافق</button></div></dialog>
+<dialog id="sdlg" style="width:min(460px,95vw)"><h3 style="margin-top:0">🔒 الأمان والحماية</h3><p class="m" id="sst"></p>
+ <div style="display:grid;gap:8px"><button onclick="setCred()">🔑 تعيين / تغيير اسم المستخدم وكلمة المرور</button><button class="sec" id="spoff" onclick="offCred()">إلغاء الدخول بكلمة المرور</button><button class="sec" onclick="lockNow()">قفل الآن</button><button class="sec" onclick="migNow()">☁️ نقل بيانات هذا الجهاز إلى حسابي</button></div>
+ <p class="m" style="margin-top:12px">⚠️ اسم المستخدم وكلمة المرور يمنعان الاطلاع العرضي على التطبيق ويُقفل تلقائيًا بعد 5 دقائق بلا نشاط، لكنه لا يشفّر البيانات المخزّنة في المتصفح. للحماية الفعلية للملفات استخدم كلمة سر لتشفير النسخة الاحتياطية.</p>
+ <div class="row"><button class="sec" onclick="ls.set('nosetup',1);$('sdlg').close()">إغلاق</button></div></dialog>
+<dialog id="edlg"><h3 style="margin-top:0">⚠️ تنبيه: وثائق تحتاج انتباهك</h3><div id="ebody"></div>
+ <div class="row"><button class="sec" onclick="ls.set('remind',new Date().toISOString().slice(0,10));$('edlg').close()">عدم الإظهار اليوم</button><button onclick="$('edlg').close()">إغلاق</button></div></dialog>
+<div id="lock"><div class="lbox"><div style="font-size:42px">🔒</div><h2 style="margin:6px 0">أرشيف المستندات</h2><p class="m">سجّل الدخول للمتابعة</p>
+ <input id="luser" autocomplete="username" dir="ltr" placeholder="اسم المستخدم" style="text-align:center;margin-bottom:8px"><input id="lpin" type="password" autocomplete="current-password" dir="ltr" placeholder="كلمة المرور" style="text-align:center"><div id="lerr" style="color:var(--er);min-height:24px;margin:4px 0"></div><button id="lgo" style="width:100%">دخول</button></div></div>
+<dialog id="pdlg2" style="width:min(460px,95vw)"><h3 style="margin-top:0">🖨 خيارات الطباعة</h3>
+ <label>ما الذي يُطبع؟</label><select id="po_c"><option value="both">البيانات + الصور</option><option value="images">الصور فقط</option><option value="data">البيانات فقط</option></select>
+ <label style="margin-top:10px">حجم الصور</label><select id="po_s"><option value="full">كبيرة (تناسب الصفحة)</option><option value="card">بحجم البطاقة الحقيقي 85.6×54 مم (الوجهان متجاوران)</option></select>
+ <label style="margin-top:10px">رقم الموبايل والبريد وعنوان السكن</label><select id="po_f"><option value="foot">تحت العنوان الرئيسي</option><option value="top">كما هو (أعلى الصفحة وفي الجدول)</option><option value="none">بدون طباعتها</option></select>
+ <p class="m">حجم البطاقة يناسب الهوية ورخصة القيادة والبطاقات المصرفية. لضمان الحجم الحقيقي اطبع بمقياس 100% (Actual size) دون «ملاءمة الصفحة».</p>
+ <div class="row"><button class="sec" onclick="$('pdlg2').close()">إلغاء</button><button onclick="goPrint()">معاينة</button></div></dialog>
+<div id="pvbar"><button onclick="window.print()">🖨 طباعة</button><button onclick="pvOut('pdf')">📄 ملف PDF</button><button onclick="pvOut('img')">🖼 صورة</button><button onclick="pvOut('share')">📤 مشاركة</button><button class="sec" onclick="closePv()">إغلاق المعاينة</button></div>
+<div id="print"></div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toEn=s=>String(s??'').replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776);
+const docHead=it=>{const p=[];if(it.type_en)p.push(`<bdi dir="ltr">${esc(it.type_en)}</bdi>`);if(it.type)p.push(`<bdi dir="rtl">${esc(it.type)}</bdi>`);return p.join('/')||'وثيقة'};
+const fmtD=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||'')?v.split('-').reverse().join('-'):'';
+const maskD=v=>{const d=toEn(v).replace(/\D/g,'').slice(0,8);return d.length>4?d.slice(0,2)+'-'+d.slice(2,4)+'-'+d.slice(4):d.length>2?d.slice(0,2)+'-'+d.slice(2):d};
+const parseD=v=>{const m=toEn(v).match(/^(\d{2})-(\d{2})-(\d{4})$/);if(!m)return'';const dt=new Date(+m[3],+m[2]-1,+m[1]);return dt.getDate()==+m[1]&&dt.getMonth()==+m[2]-1?m[3]+'-'+m[2]+'-'+m[1]:''};
+const _m={};
+const ls={get:k=>{try{const v=localStorage.getItem(k);return v===null?(_m[k]??null):v}catch(e){return _m[k]??null}},set:(k,v)=>{_m[k]=String(v);try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete _m[k];try{localStorage.removeItem(k)}catch(e){}}};
+if(ls.get('cuh'))document.body.classList.add('locked');
+/* نافذة تأكيد/إدخال داخلية (بديل confirm/prompt) */
+function ask(msg,o={}){return new Promise(res=>{const d=$('adlg'),i=$('ain');$('amsg').textContent=msg;i.style.display=o.input?'':'none';i.type=o.input||'text';i.value='';
+ const done=v=>{d.close();res(v)};
+ $('aok').onclick=()=>done(o.input?i.value:true);$('ano').onclick=()=>done(o.input?null:false);
+ d.oncancel=e=>{e.preventDefault();done(o.input?null:false)};
+ i.onkeydown=e=>{if(e.key==='Enter')$('aok').click()};
+ d.showModal();if(o.input)i.focus()})}
+/* التشفير (AES-GCM) */
+const u8b64=u=>{let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
+const b64u8=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
+async function ckey(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:200000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function enc(text,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+ const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},await ckey(pw,salt),new TextEncoder().encode(text)));
+ return JSON.stringify({enc:1,salt:u8b64(salt),iv:u8b64(iv),data:u8b64(ct)})}
+async function dec(o,pw){return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64u8(o.iv)},await ckey(pw,b64u8(o.salt)),b64u8(o.data)))}
+/* اسم المستخدم وكلمة المرور */
+if(ls.get('pinh')){ls.del('pinh');ls.del('pins')} /* إزالة قفل الرمز القديم */
+const credHash=async(u,p,salt)=>{const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(u.trim().toLowerCase()+'\n'+p),'PBKDF2',false,['deriveBits']);
+ return u8b64(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:150000,hash:'SHA-256'},k,256)))};
+const credOk=async(u,p)=>(await credHash(u,p,ls.get('cus')||''))===ls.get('cuh');
+function openS(){const on=!!ls.get('cuh');$('sst').textContent='الدخول بكلمة مرور: '+(on?'مفعّل':'غير مفعّل');$('spoff').style.display=on?'':'none';$('sdlg').showModal()}
+function lockNow(){if(!ls.get('cuh')){toast('فعّل اسم المستخدم وكلمة المرور أولًا');return}
+ document.querySelectorAll('dialog[open]').forEach(d=>d.close());closePv();document.body.classList.add('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent=''}
+let fails=0,busy=false;
+async function tryUnlock(){if(busy)return;busy=true;
+ if(await credOk($('luser').value,$('lpin').value)){fails=0;document.body.classList.remove('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent='';busy=false;postLoad();return}
+ fails++;$('lerr').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';await new Promise(r=>setTimeout(r,Math.min(fails,6)*1000));busy=false}
+$('lgo').onclick=tryUnlock;$('lpin').onkeydown=$('luser').onkeydown=e=>{if(e.key==='Enter')tryUnlock()};
+async function checkCur(){const u0=await ask('أدخل اسم المستخدم الحالي',{input:'text'});if(u0===null)return false;
+ const p0=await ask('أدخل كلمة المرور الحالية',{input:'password'});if(p0===null)return false;
+ if(!await credOk(u0,p0)){toast('بيانات الدخول الحالية غير صحيحة');return false}return true}
+async function setCred(){
+ if(ls.get('cuh')&&!await checkCur())return;
+ const u=((await ask('اسم المستخدم الجديد',{input:'text'}))??'').trim();if(!u)return;
+ const p=(await ask('كلمة المرور الجديدة (6 أحرف على الأقل)',{input:'password'}))??'';if(!p)return;
+ if(p.length<6){toast('كلمة المرور قصيرة، يلزم 6 أحرف على الأقل');return}
+ const p2=(await ask('أعد كتابة كلمة المرور للتأكيد',{input:'password'}))??'';if(p2!==p){toast('كلمتا المرور غير متطابقتين');return}
+ const salt=u8b64(crypto.getRandomValues(new Uint8Array(12)));ls.set('cus',salt);ls.set('cuh',await credHash(u,p,salt));toast('تم تفعيل الدخول باسم مستخدم وكلمة مرور');openS()}
+async function offCred(){if(!await checkCur())return;ls.del('cuh');ls.del('cus');toast('تم إلغاء الدخول بكلمة المرور');openS()}
+let idleT;const bump=()=>{clearTimeout(idleT);idleT=setTimeout(()=>{if(ls.get('cuh'))lockNow()},300000)};
+['click','keydown','touchstart'].forEach(e=>addEventListener(e,bump));bump();
+/* تنبيه الانتهاء عند الفتح */
+const daysLeft=d=>Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
+function alerts(){
+ if(ls.get('remind')===new Date().toISOString().slice(0,10))return;
+ const L=docs.flatMap(g=>g.items.filter(i=>['expired','soon'].includes(status(i))).map(i=>({g,i,n:daysLeft(i)}))).sort((a,b)=>a.n-b.n);
+ if(!L.length)return;
+ $('ebody').innerHTML=L.map(x=>`<div class="item" style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center" onclick="$('edlg').close();show('${x.g.id}')"><div><b>${esc(x.g.title||x.g.title_en)}</b><div class="m">${esc(x.i.type||x.i.type_en||'وثيقة')} — ${fmtD(x.i.exp)}</div></div><span class="badge b-${status(x.i)}">${x.n<0?'منتهية منذ '+(-x.n)+' يوم':x.n===0?'تنتهي اليوم':'باقي '+x.n+' يوم'}</span></div>`).join('');
+ $('edlg').showModal()}
+/* تذكير النسخ الاحتياطي */
+function bkBanner(){const b=$('bk');if(!docs.length){b.innerHTML='';return}
+ const last=+ls.get('lastBackup')||0,d=Math.floor((Date.now()-last)/864e5);
+ b.innerHTML=(!last||d>30)?`<div class="warn">💾 <span>${last?'مضى '+d+' يومًا على آخر نسخة احتياطية':'لم تأخذ أي نسخة احتياطية بعد'}. بياناتك محفوظة داخل هذا المتصفح فقط.</span><button class="sm" onclick="backup()">نسخ احتياطي الآن</button></div>`:''}
+const MAXPDF=8*1024*1024;
+let docs=[],view='cards',sel=new Set(),editId=null,cur=null,tgt=0,db;
+const DEF_TYPES=['هوية','جواز سفر','رخصة قيادة','عقد','شهادة','فاتورة','أخرى'];
+if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2800)}
+
+/* ===== التخزين: IndexedDB ===== */
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('docs-archive',1);
+ r.onupgradeneeded=()=>r.result.createObjectStore('docs',{keyPath:'id'});
+ r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+const tx=(m,fn)=>new Promise((res,rej)=>{const t=db.transaction('docs',m),s=t.objectStore('docs'),q=fn(s);
+ t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)});
+const dbAll=()=>tx('readonly',s=>s.getAll());
+const dbPut=d=>tx('readwrite',s=>s.put(d));
+const dbDel=id=>tx('readwrite',s=>s.delete(id));
+const newItem=()=>({id:crypto.randomUUID(),type:'',type_en:'',num:'',org:'',org_en:'',iss:'',exp:'',tags:'',notes:'',notes_en:'',files:[]});
+/* تحويل السجلات القديمة (وثيقة واحدة) إلى عنوان يحوي وثيقة */
+function norm(d){if(Array.isArray(d.items))return d;
+ return{id:d.id,title:d.title,created:d.created||Date.now(),notes:'',items:[{...newItem(),type:d.type||'',num:d.num||'',org:d.org||'',iss:d.iss||'',exp:d.exp||'',tags:d.tags||'',notes:d.notes||'',files:d.files||[]}]}}
+
+/* ===== الحالة ===== */
+function status(d){if(!d.exp)return'none';const n=Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
+ return n<0?'expired':n<=30?'soon':'valid'}
+const SL={valid:'ساري',soon:'قارب على الانتهاء',expired:'منتهي',none:'بلا انتهاء'};
+const SLE={valid:'Valid',soon:'Expiring soon',expired:'Expired',none:'No expiry'};
+const DEF_EN=['ID Card','Passport','Driving License','Contract','Certificate','Invoice','Other'];
+const badge=d=>`<span class="badge b-${status(d)}">${SL[status(d)]}</span>`;
+function gstatus(g){const o={none:0,valid:1,soon:2,expired:3};let b='none';g.items.forEach(i=>{if(o[status(i)]>o[b])b=status(i)});return b}
+const label=i=>(i.type||i.type_en||'وثيقة')+(i.num?' - '+toEn(i.num):'');
+const labelEn=i=>i.type_en?i.type_en+(i.num?' - '+toEn(i.num):''):'';
+const contact=g=>(g.phone||g.email)?`<div class="ct">${g.phone?'📱 '+esc(toEn(g.phone)):''}${g.phone&&g.email?'<br>':''}${g.email?'✉️ '+esc(g.email):''}</div>`:'';
+const addr=g=>(g.address||g.address_en)?`<p class="m">📍 ${[g.address,g.address_en].filter(Boolean).map(esc).join(' / ')}</p>`:'';
+const enLine=(t,c='m')=>t?`<p class="${c} en">${esc(t)}</p>`:'';
+
+/* ===== العرض ===== */
+function filtered(){
+ const q=$('q').value.trim().toLowerCase(),t=$('ft').value,s=$('fs').value,a=parseD($('fd1').value),b=parseD($('fd2').value);
+ const hay=g=>[g.title,g.title_en,g.phone,g.email,g.address,g.address_en,...g.items.flatMap(i=>[i.type,i.type_en,i.num,i.org,i.org_en,i.iss,i.exp,i.notes,i.notes_en,i.tags])].join(' ').toLowerCase();
+ let r=docs.filter(g=>{const its=g.items;
+  if(t&&!its.some(i=>i.type===t))return false;
+  if(s&&!its.some(i=>status(i)===s))return false;
+  if((a||b)&&!its.some(i=>i.iss&&(!a||i.iss>=a)&&(!b||i.iss<=b)))return false;
+  if(q&&!hay(g).includes(q))return false;return true});
+ const so=$('so').value;
+ r.sort((x,y)=>so==='az'?(x.title||x.title_en||'').localeCompare(y.title||y.title_en||'','ar'):so==='old'?x.created-y.created:y.created-x.created);
+ return r}
+function thumb(g){for(const i of g.items)for(const f of i.files)if(f.type.startsWith('image'))return`<img src="${f.data}" alt="">`;return g.items.some(i=>i.files.length)?'📄':'🗂'}
+const chips=g=>g.items.map(i=>`<span class="badge b-${status(i)}" style="margin:1px">${esc(i.type||i.type_en||'وثيقة')}</span>`).join(' ');
+function stats(){
+ const its=docs.flatMap(g=>g.items),n=k=>its.filter(i=>status(i)===k).length;
+ $('s_all').textContent=docs.length;$('s_valid').textContent=n('valid');$('s_soon').textContent=n('soon');$('s_expired').textContent=n('expired');
+ document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('on',c.dataset.f===$('fs').value&&c.dataset.f!==''))}
+function statF(v){$('fs').value=v;render()}
+function render(){
+ stats();bkBanner();
+ const all=docs.flatMap(g=>g.items.map(i=>i.type)).filter(Boolean);
+ const types=[...new Set([...DEF_TYPES,...all])];
+ const cv=$('ft').value;$('ft').innerHTML='<option value="">كل الأنواع</option>'+types.map(t=>`<option ${t===cv?'selected':''}>${esc(t)}</option>`).join('');
+ $('types').innerHTML=types.map(t=>`<option value="${esc(t)}">`).join('');
+ $('types_en').innerHTML=[...new Set([...DEF_EN,...docs.flatMap(g=>g.items.map(i=>i.type_en)).filter(Boolean)])].map(t=>`<option value="${esc(t)}">`).join('');
+ const r=filtered();$('cnt').textContent=`${r.length} من ${docs.length} عنوان`;
+ if(!r.length){$('list').innerHTML='<p class="m" style="text-align:center;padding:40px">لا توجد بيانات. اضغط «عنوان جديد» للبدء.</p>';return}
+ const acts=g=>`<button class="sm" onclick="show('${g.id}')">عرض / طباعة</button><button class="sm sec" onclick="openForm('${g.id}')">تعديل</button><button class="sm sec" onclick="cloneG('${g.id}')" title="نسخ الهيكل كقالب لشخص آخر">نسخ</button><button class="sm dng" onclick="del('${g.id}')">حذف</button>`;
+ const ck=g=>`<input type="checkbox" style="width:auto" ${sel.has(g.id)?'checked':''} onchange="tg('${g.id}',this.checked)" title="تحديد لطباعة كل وثائقه">`;
+ if(view==='cards')$('list').innerHTML='<div class="grid">'+r.map(g=>`<div class="card"><div class="thumb">${thumb(g)}</div><div class="cb"><div class="th"><div><h3>${esc(g.title||g.title_en)}</h3>${enLine(g.title_en)}</div>${contact(g)}</div>${addr(g)}
+  <p class="m">${g.items.length} وثيقة • ${g.items.reduce((n,i)=>n+i.files.length,0)} مرفق</p><div>${chips(g)}</div></div><div class="ca">${ck(g)}${acts(g)}</div></div>`).join('')+'</div>';
+ else $('list').innerHTML='<div class="tw"><table><tr><th></th><th>العنوان</th><th>الوثائق</th><th>الحالة</th><th></th></tr>'+
+  r.map(g=>`<tr><td>${ck(g)}</td><td><div class="th"><div>${esc(g.title||g.title_en)}${enLine(g.title_en)}</div>${contact(g)}</div></td><td>${chips(g)}</td><td>${badge({exp:null,...{}})&&`<span class="badge b-${gstatus(g)}">${SL[gstatus(g)]}</span>`}</td><td style="white-space:nowrap">${acts(g)}</td></tr>`).join('')+'</table></div>';
+}
+function tg(id,on){on?sel.add(id):sel.delete(id)}
+function toggleView(){view=view==='cards'?'table':'cards';render()}
+function toggleTheme(){const d=document.documentElement,n=(d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))==='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}
+try{const th=localStorage.getItem('theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+
+/* ===== النموذج: عنوان + عدة وثائق ===== */
+function openForm(id){
+ editId=id||null;
+ cur=id?structuredClone(docs.find(x=>x.id===id)):{title:'',notes:'',items:[newItem()]};
+ $('dt').textContent=id?'تعديل الملف':'عنوان جديد';
+ $('f_title').value=cur.title||'';$('f_title_en').value=cur.title_en||'';$('f_phone').value=cur.phone||'';$('f_email').value=cur.email||'';
+ drawItems();$('dlg').showModal()}
+function cloneG(id){
+ const g=docs.find(x=>x.id===id);editId=null;
+ cur={title:'',title_en:'',phone:'',email:'',address:g.address||'',address_en:g.address_en||'',items:g.items.map(i=>({...newItem(),type:i.type,type_en:i.type_en,org:i.org,org_en:i.org_en}))};
+ $('dt').textContent='نسخة جديدة من «'+(g.title||g.title_en)+'»';
+ $('f_title').value='';$('f_title_en').value='';$('f_phone').value='';$('f_email').value='';
+ drawItems();$('dlg').showModal();toast('أدخل بيانات الشخص الجديد: تم نسخ أنواع الوثائق والجهات والعنوان فقط')}
+function addItem(){cur.items.push(newItem());drawItems();setTimeout(()=>{const l=$('items').lastElementChild;l&&l.scrollIntoView({behavior:'smooth'})},50)}
+async function rmItem(i){if(await ask('حذف هذه الوثيقة من العنوان؟')){cur.items.splice(i,1);drawItems()}}
+function drawItems(){
+ const fld=(i,k,l,ex='')=>`<div><label>${l}</label><input ${ex} value="${esc(cur.items[i][k])}" oninput="${k==='num'?'this.value=toEn(this.value);':''}cur.items[${i}].${k}=this.value"></div>`;
+ $('items').innerHTML=cur.items.map((it,i)=>`<div class="item"><div class="ih"><b>وثيقة ${i+1}${it.type||it.type_en?' — '+esc(it.type||it.type_en):''}</b><button class="sm dng" onclick="rmItem(${i})">حذف الوثيقة</button></div>
+  <div class="f2">${fld(i,'type','النوع','list="types" placeholder="هوية / جواز / رخصة..."')}${fld(i,'type_en','Type (English)','dir="ltr" list="types_en" placeholder="ID / Passport / License..."')}
+  ${fld(i,'org','الجهة المصدِّرة')}${fld(i,'org_en','Issuer (English)','dir="ltr"')}
+  ${fld(i,'num','رقم الوثيقة / Document No','dir="ltr"')}${fld(i,'tags','وسوم (بفاصلة) / Tags')}
+  ${['iss','exp'].map(k=>`<div><label>${k==='iss'?'تاريخ الإصدار / Issue date':'تاريخ الانتهاء / Expiry date'}</label><input dir="ltr" inputmode="numeric" maxlength="10" placeholder="dd-mm-yyyy" value="${fmtD(it[k])}" oninput="this.value=maskD(this.value);cur.items[${i}].${k}=parseD(this.value)"></div>`).join('')}
+  ${i===0?`<div><label>عنوان السكن (يُدخل مرة واحدة ويُطبع مع كل الوثائق)</label><input value="${esc(cur.address)}" oninput="cur.address=this.value"></div>
+  <div><label>Address (English)</label><input dir="ltr" value="${esc(cur.address_en)}" oninput="cur.address_en=this.value"></div>`:''}</div>
+  <button class="sm sec" style="margin-top:8px" title="تُرسل صورة الوثيقة إلى Claude لقراءتها" onclick="aiFill(${i})">✨ استخراج البيانات من الصورة</button><div class="drop" data-i="${i}">اسحب صور الوثيقة هنا أو اضغط للاختيار (PDF / JPG / PNG)</div>
+  <div class="files">${it.files.map((f,j)=>`<div class="fi">${f.type.startsWith('image')?`<img src="${f.data}">`:'📄 PDF'}<b onclick="cur.items[${i}].files.splice(${j},1);drawItems()">×</b></div>`).join('')}</div></div>`).join('')}
+const rd=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(f)});
+function compress(url){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const m=1800,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');
+ c.width=im.width*k;c.height=im.height*k;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.8))};im.onerror=()=>rej(new Error('img'));im.src=url})}
+async function addFiles(i,list){
+ const it=cur.items[i];
+ for(const f of list){
+  try{
+   if(f.type==='application/pdf'){if(f.size>MAXPDF){toast('ملف PDF أكبر من 8MB: '+f.name);continue}it.files.push({name:f.name,type:f.type,data:await rd(f)})}
+   else if(/^image\/(jpeg|png)$/.test(f.type))it.files.push({name:f.name,type:'image/jpeg',data:await compress(await rd(f))});
+   else toast('صيغة غير مدعومة: '+f.name)
+  }catch(e){toast('تعذّر قراءة الملف: '+f.name)}}
+ drawItems()}
+const IT=$('items');
+IT.addEventListener('click',e=>{const d=e.target.closest('.drop');if(d){tgt=+d.dataset.i;$('fin').click()}});
+IT.addEventListener('dragover',e=>{const d=e.target.closest('.drop');if(d){e.preventDefault();d.classList.add('on')}});
+IT.addEventListener('dragleave',e=>{const d=e.target.closest('.drop');if(d)d.classList.remove('on')});
+IT.addEventListener('drop',e=>{const d=e.target.closest('.drop');if(d){e.preventDefault();addFiles(+d.dataset.i,[...e.dataTransfer.files])}});
+$('fin').onchange=e=>{addFiles(tgt,[...e.target.files]);e.target.value=''};
+
+async function save(){
+ const title=$('f_title').value.trim(),title_en=$('f_title_en').value.trim();
+ if(!title&&!title_en){toast('العنوان مطلوب (بالعربية أو الإنجليزية)');return}
+ const old=editId&&docs.find(x=>x.id===editId);
+ const d={id:editId||crypto.randomUUID(),created:old?old.created:Date.now(),title,title_en,phone:toEn($('f_phone').value.trim()),email:$('f_email').value.trim(),address:(cur.address||'').trim(),address_en:(cur.address_en||'').trim(),items:cur.items.map(x=>({...x,num:toEn(x.num)}))};
+ const oldA=old?old.items.flatMap(i=>i.files.map(f=>f.aid)).filter(Boolean):[];
+ if(cloud&&d.items.some(i=>i.files.some(f=>!f.aid)))toast('جارٍ رفع الصور...');
+ try{await persist(d)}catch(e){const c=e&&e.code;toast(e&&e.name==='QuotaExceededError'||c==='quota_exceeded'||c==='quota_or_state'?'مساحة التخزين ممتلئة':c==='too_large'?'أحد الملفات أكبر من الحد المسموح':c==='not_granted'||c==='not_writer'?'لا تملك صلاحية الحفظ':'تعذّر الحفظ');return}
+ if(cloud){const keep=new Set(d.items.flatMap(i=>i.files.map(f=>f.aid)));oldA.filter(a=>!keep.has(a)).forEach(a=>cloud.assets.delete(a).catch(()=>{}))}
+ if(old)Object.assign(old,d);else docs.push(d);
+ $('dlg').close();render();toast('تم الحفظ')}
+async function del(id){if(!await ask('حذف هذا العنوان وجميع وثائقه نهائيًا؟'))return;await removeDoc(id);docs=docs.filter(d=>d.id!==id);sel.delete(id);render()}
+
+/* ===== الصور وPDF ===== */
+const rowsHtml=(d,c='vt',g={})=>{
+ const R2=[['النوع','Type',d.type,d.type_en,1],['رقم الوثيقة','Document No.',toEn(d.num)],['الجهة المصدِّرة','Issuer',d.org,d.org_en,1],['تاريخ الإصدار','Issue date',fmtD(d.iss)],['تاريخ الانتهاء','Expiry date',fmtD(d.exp)],['الحالة','Status',SL[status(d)],SLE[status(d)],1],['الوسوم','Tags',d.tags],['عنوان السكن','Address',g.address,g.address_en,1]];
+ return`<table class="${c}">`+R2.filter(r=>(r[2]||r[3])&&!(c==='pt'&&['Status','Tags'].includes(r[1]))).map(r=>{const L=`<th class="en">${r[1]}</th>`;
+  return r[4]?`<tr><th>${r[0]}</th><td>${esc(r[2])}</td><td class="en">${esc(r[3])}</td>${L}</tr>`:`<tr><th>${r[0]}</th><td colspan="2" style="text-align:center${r[1]==='Document No.'?`;font-weight:700;font-size:${c==='pt'?'18.7px':'16px'}`:''}" dir="${/^[\w\s\-\/+.:]*$/.test(r[2])?'ltr':'rtl'}">${esc(r[2])}</td>${L}</tr>`}).join('')+'</table>'};
+async function pdfImgs(url,scale){
+ const u=await dataBytes(url);
+ const p=await pdfjsLib.getDocument({data:u,disableFontFace:true,cMapUrl:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',cMapPacked:true,standardFontDataUrl:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/'}).promise,out=[];
+ for(let i=1;i<=p.numPages;i++){const pg=await p.getPage(i),vp=pg.getViewport({scale}),c=document.createElement('canvas');c.width=vp.width;c.height=vp.height;
+  const cx=c.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,c.width,c.height);await pg.render({canvasContext:cx,viewport:vp,intent:'print'}).promise;out.push(c.toDataURL('image/jpeg',scale>=2.5?.95:.85))}
+ return out}
+const cache=new Map();
+async function itemPdfPages(it,scale){const out=[];
+ for(let j=0;j<it.files.length;j++){const f=it.files[j];if(f.type.startsWith('image'))continue;
+  const k=it.id+'|'+j+'|'+scale+'|'+f.data.length;
+  if(!cache.has(k))try{cache.set(k,await pdfImgs(f.data,scale))}catch(e){cache.set(k,[])}
+  out.push(...cache.get(k))}
+ return out}
+const pdfPg=imgs=>imgs.map(x=>`<div class="page pdfpg"><img style="max-height:283mm" src="${x}"></div>`).join('');
+async function itemImgs(it,scale,skipPdf){const out=[];
+ for(let j=0;j<it.files.length;j++){const f=it.files[j];
+  if(f.type.startsWith('image')){out.push(f.data);continue}
+  if(skipPdf)continue;
+  const k=it.id+'|'+j+'|'+scale+'|'+f.data.length;
+  if(!cache.has(k))try{cache.set(k,await pdfImgs(f.data,scale))}catch(e){cache.set(k,[])}
+  out.push(...cache.get(k))}
+ return out}
+
+/* ===== العرض: اختيار وثيقة أو كل الوثائق ===== */
+let vg=null,vs=new Set(),vtok=0,vurls=[];
+function show(id){vg=docs.find(x=>x.id===id);vs=new Set(vg.items.map(i=>i.id));$('vdlg').showModal();drawView()}
+function drawView(){
+ $('vbody').innerHTML=`<div class="th"><div><h3 style="margin:0">${esc(vg.title||vg.title_en)}</h3>${enLine(vg.title_en)}</div>${contact(vg)}</div>
+ ${vg.items.length?`<div class="m">اختر الوثيقة المراد عرضها أو طباعتها:</div><div>${vg.items.map(i=>`<label class="chip"><input type="checkbox" ${vs.has(i.id)?'checked':''} onchange="vtg('${i.id}',this.checked)">${esc(label(i))}</label>`).join('')}</div>
+ <div class="row" style="justify-content:flex-start;margin:6px 0"><button class="sm sec" onclick="vall(true)">تحديد الكل</button><button class="sm sec" onclick="vall(false)">إلغاء التحديد</button><button class="sm" onclick="printVS()">🖨 طباعة المحدد</button></div>`:'<p class="m">لا توجد وثائق تحت هذا العنوان.</p>'}<div id="vc"></div>`;
+ drawContent()}
+function vtg(id,on){on?vs.add(id):vs.delete(id);drawContent()}
+function vall(on){vs=new Set(on?vg.items.map(i=>i.id):[]);drawView()}
+async function drawContent(){
+ const tok=++vtok,c=$('vc'),its=vg.items.filter(i=>vs.has(i.id));let h='';vurls.forEach(u=>URL.revokeObjectURL(u));vurls=[];
+ if(!its.length){c.innerHTML=vg.items.length?'<p class="m">لم تحدد أي وثيقة</p>':'';return}
+ c.innerHTML='<p class="m">جارٍ التحميل...</p>';
+ for(const it of its){let body='';
+  for(let j=0;j<it.files.length;j++){const f=it.files[j];
+   if(f.type.startsWith('image')){body+=`<img class="vimg" src="${f.data}">`;continue}
+   try{const u=URL.createObjectURL(new Blob([await dataBytes(f.data)],{type:'application/pdf'}));vurls.push(u);
+    body+=`<div style="margin:8px 0"><div class="m" style="margin-bottom:4px">📄 ${esc(f.name||'PDF')} — يُعرض كما هو بملفه الأصلي · <a href="${u}" target="_blank" download="${esc(f.name||'document.pdf')}">فتح / تنزيل الملف الأصلي</a></div><object data="${u}#toolbar=1" type="application/pdf" style="width:100%;height:80vh;min-height:520px;border:1px solid #bbb;border-radius:8px"><p class="m">تعذّر عرض الـPDF هنا — استخدم الرابط أعلاه لفتحه.</p></object></div>`}catch(e){body+='<p class="m">تعذّر قراءة ملف PDF</p>'}}
+  if(tok!==vtok)return;
+  h+=`<div class="item"><h4 dir="ltr" style="margin:0 0 6px;text-align:center">${docHead(it)} ${badge(it)}</h4>${rowsHtml(it,'vt',vg)}${body||'<p class="m">لا توجد صورة</p>'}</div>`}
+ c.innerHTML=h}
+
+/* ===== الطباعة A4 (صفحة لكل وثيقة) ===== */
+function printVS(){const its=vg.items.filter(i=>vs.has(i.id));if(!its.length){toast('حدّد وثيقة واحدة على الأقل');return}
+ $('vdlg').close();printPairs(its.map(it=>({g:vg,it})))}
+function printSel(){if(!sel.size){toast('حدّد عنوانًا واحدًا على الأقل بمربع الاختيار');return}
+ printPairs(docs.filter(g=>sel.has(g.id)).flatMap(g=>g.items.map(it=>({g,it}))))}
+let pend=[];
+function printPairs(pairs){if(!pairs.length){toast('لا توجد وثائق للطباعة');return}pend=pairs;
+ $('po_c').value=ls.get('po_c')||'both';$('po_s').value=ls.get('po_s')||'full';$('po_f').value=ls.get('po_f')||'foot';$('pdlg2').showModal()}
+function goPrint(){const o={c:$('po_c').value,s:$('po_s').value,f:$('po_f').value};ls.set('po_c',o.c);ls.set('po_s',o.s);ls.set('po_f',o.f);$('pdlg2').close();buildPrint(pend,o)}
+/* صور فقط + كبيرة: وثائق العنوان الواحد في صفحة واحدة، الفاصل = اسم الوثيقة - رقمها */
+const pfoot=(g,o)=>{if(o.f!=='foot')return'';const parts=[];
+ if(g.phone)parts.push(`<div>📱 <b>الموبايل / Mobile:</b> <bdi dir="ltr">${esc(toEn(g.phone))}</bdi></div>`);
+ if(g.email)parts.push(`<div>✉️ <b>البريد / Email:</b> <bdi dir="ltr">${esc(g.email)}</bdi></div>`);
+ if(g.address)parts.push(`<div>📍 <b>العنوان:</b> <bdi>${esc(g.address)}</bdi></div>`);
+ if(g.address_en)parts.push(`<div dir="ltr">${g.address?'':'📍 '}<b>Address:</b> <bdi>${esc(g.address_en)}</bdi></div>`);
+ return parts.length?`<div class="pfoot" style="border-bottom:1px solid #999;padding:0 0 8px;margin:-4px 0 12px;font-size:16px;font-weight:600;line-height:1.8;text-align:center">${parts.join('')}</div>`:''};
+const pcls=o=>'page';
+/* بيانات فقط: وثائق العنوان الواحد في صفحة واحدة مع تكبير الخط لملء الصفحة */
+function dataOnlyHtml(pairs,o){
+ const groups=[];for(const x of pairs){let G=groups.find(k=>k.g===x.g);if(!G){G={g:x.g,items:[]};groups.push(G)}G.items.push(x.it)}
+ let h='';
+ for(const {g,items} of groups){
+  h+=`<div class="${pcls(o)}"><div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid #2459d6;padding-bottom:8px;margin-bottom:12px"><h2 style="margin:0;padding:0;border:0">${esc(g.title||'')}</h2><div dir="ltr" style="text-align:left"><h2 style="margin:0;padding:0;border:0">${esc(g.title_en||'')}</h2>${o.f==='top'&&(g.phone||g.email)?`<div style="font-size:15px;line-height:1.7;margin-top:4px">${g.phone?'Mobile: '+esc(toEn(g.phone)):''}${g.phone&&g.email?'<br>':''}${g.email?'Email: '+esc(g.email):''}</div>`:''}</div></div>${pfoot(g,o)}`;
+  items.forEach((it,i)=>{h+=`<h3 dir="ltr" class="dh" style="margin:${i?'14px':'0'} 0 8px;text-align:center">${docHead(it)}</h3>`+rowsHtml(it,'pt',(o.f==='top'&&i===items.length-1)?g:{...g,address:'',address_en:''})});
+  h+='</div>'}
+ return h}
+async function fitData(){
+ const root=$('print');
+ const r=document.createElement('div');r.style.cssText='height:100mm;position:absolute;visibility:hidden';document.body.appendChild(r);const MM=r.offsetHeight/100;r.remove();
+ for(const pg of root.querySelectorAll('.page')){
+  const els=[...pg.querySelectorAll('td,th,h3.dh')];if(!els.length)continue;
+  const base=els.map(e=>parseFloat(getComputedStyle(e).fontSize)||16);
+  const pad=els.map(e=>parseFloat(getComputedStyle(e).paddingTop)||4);
+  let best=1;
+  for(let f=1.1;f<=2.2;f+=0.1){els.forEach((e,i)=>{e.style.fontSize=(base[i]*f)+'px';if(e.tagName!=='H3')e.style.padding=(pad[i]*f)+'px 6px'});
+   if(pg.scrollHeight>297*MM-2)break;best=f}
+  els.forEach((e,i)=>{e.style.fontSize=(base[i]*best)+'px';if(e.tagName!=='H3')e.style.padding=(pad[i]*best)+'px 6px'})}}
+async function imagesOnlyHtml(pairs,o){
+ const groups=[];for(const x of pairs){let G=groups.find(k=>k.g===x.g);if(!G){G={g:x.g,items:[]};groups.push(G)}G.items.push(x.it)}
+ let h='';
+ for(const {g,items} of groups){
+  const data=[];for(const it of items)data.push({it,imgs:await itemImgs(it,1.6,true)});
+  const n=Math.max(1,data.reduce((a,d)=>a+d.imgs.length,0));
+  const nd=Math.max(1,data.filter(d=>d.imgs.length).length);const mh=140;
+  h+=`<div class="${pcls(o)}"><div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid #2459d6;padding-bottom:6px;margin-bottom:8px"><h2 style="margin:0;padding:0;border:0">${esc(g.title||'')}</h2><div dir="ltr" style="text-align:left"><h2 style="margin:0;padding:0;border:0">${esc(g.title_en||'')}</h2></div></div>${pfoot(g,o)}`;
+  for(const {it,imgs} of data){if(!imgs.length)continue;
+   const num=it.num?' - <bdi dir="ltr">'+esc(toEn(it.num))+'</bdi>':'';
+   h+=`<h3 dir="ltr" style="margin:6px 0 4px;text-align:center;font-size:15px">${docHead(it)}${num}</h3>`;
+   h+=imgs.map(s=>`<img style="max-height:${mh}mm" src="${s}">`).join('')}
+  h+='</div>';for(const it of items)h+=pdfPg(await itemPdfPages(it,4))}
+ return h}
+async function fitImgOnly(){
+ const root=$('print');
+ await Promise.all([...root.querySelectorAll('img')].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r})));
+ const r=document.createElement('div');r.style.cssText='height:100mm;position:absolute;visibility:hidden';document.body.appendChild(r);const MM=r.offsetHeight/100;r.remove();
+ for(const pg of root.querySelectorAll('.page:not(.pdfpg)')){const ims=[...pg.querySelectorAll('img')];let k=0;
+  while(pg.scrollHeight>297*MM+1&&k++<120){let ch=0;for(const im of ims){const c=parseFloat(im.style.maxHeight)||(parseFloat(getComputedStyle(im).maxHeight)/MM)||100;if(c>15){im.style.maxHeight=(c*0.97)+'mm';ch=1}}if(!ch)break}}}
+async function buildPrint(pairs,o){
+ toast('جارٍ تجهيز المعاينة...');let h='';
+ if(o.c==='data')h=dataOnlyHtml(pairs,o);else if(o.c==='images'&&o.s==='full')h=await imagesOnlyHtml(pairs,o);else{const seenG=new Set();for(const {g,it} of pairs){const imgs=o.c==='data'?[]:await itemImgs(it,1.6,true);
+  const imgHtml=!imgs.length?'':o.s==='card'?`<div class="cards">${imgs.map(s=>`<img class="card85" src="${s}">`).join('')}</div>`:(imgs.length===2)?`<div class="pair">${imgs.map(s=>`<img src="${s}">`).join('')}</div>`:imgs.map(s=>`<img src="${s}">`).join('');
+  const first=!seenG.has(g);seenG.add(g);
+  h+=`<div class="${pcls(o)}">${first?`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid #2459d6;padding-bottom:8px;margin-bottom:12px"><h2 style="margin:0;padding:0;border:0">${esc(g.title||'')}</h2><div dir="ltr" style="text-align:left"><h2 style="margin:0;padding:0;border:0">${esc(g.title_en||'')}</h2>${o.f==='top'&&(g.phone||g.email)?`<div style="font-size:15px;line-height:1.7;margin-top:4px">${g.phone?'Mobile: '+esc(toEn(g.phone)):''}${g.phone&&g.email?'<br>':''}${g.email?'Email: '+esc(g.email):''}</div>`:''}</div></div>${pfoot(g,o)}`:''}<h3 dir="ltr" style="margin:0 0 8px;text-align:center">${docHead(it)}</h3>${o.c==='images'?'':rowsHtml(it,'pt',(o.f==='top'&&first)?g:{...g,address:'',address_en:''})}${imgHtml}</div>`+(o.c==='data'?'':pdfPg(await itemPdfPages(it,4)))}}
+ $('print').innerHTML=h;$('print').classList.add('pv');$('pvbar').classList.add('on');if(o.c==='data')await fitData();else if(o.c==='images'&&o.s==='full')await fitImgOnly();else{if(pairs.length===1)await fitSingle();if(o.s!=='card')await fitImgOnly()}numberPages($('print'))}
+/* وثيقة بصورة واحدة: تُصغَّر الصورة لتتسع في نفس صفحة البيانات */
+async function fitSingle(){
+ const root=$('print');
+ await Promise.all([...root.querySelectorAll('img')].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r})));
+ const ruler=document.createElement('div');ruler.style.cssText='height:100mm;position:absolute;visibility:hidden';document.body.appendChild(ruler);
+ const MM=ruler.offsetHeight/100;ruler.remove();
+ for(const p of root.querySelectorAll('.page:not(.pdfpg)')){
+  const imgs=p.querySelectorAll(':scope>img');if(imgs.length!==1)continue;const im=imgs[0];let used=0;
+  [...p.children].forEach(k=>{if(k!==im){const ft=k.classList.contains('pfoot');const cs=getComputedStyle(k);used+=k.offsetHeight+(ft?0:parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0)}});
+  const room=(297-28-4)*MM-used-16;
+  im.style.maxHeight=Math.min(Math.max(room/MM,60),200)+'mm'}}
+function closePv(){$('print').classList.remove('pv');$('pvbar').classList.remove('on');$('print').innerHTML=''}
+
+/* ===== مشاركة وحفظ الوثيقة كـ PDF أو صورة ===== */
+function numberPages(root){const ps=[...root.querySelectorAll('.page')];root.querySelectorAll('.pnum').forEach(x=>x.remove());ps.forEach((p,i)=>{const d=document.createElement('div');d.className='pnum';d.textContent=(i+1)+'/'+ps.length;p.appendChild(d)})}
+async function pagesToCanvases(){
+ const box=document.createElement('div');box.style.cssText='position:absolute;left:-10000px;top:0;width:210mm';box.innerHTML=$('print').innerHTML;document.body.appendChild(box);
+ const out=[];
+ try{
+  box.querySelectorAll('.pnum').forEach(x=>x.remove());
+  await Promise.all([...box.querySelectorAll('img')].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r})));
+  const ruler=document.createElement('div');ruler.style.cssText='height:100mm;position:absolute;visibility:hidden';document.body.appendChild(ruler);
+  const MM=ruler.offsetHeight/100;ruler.remove();const maxH=(297-28-2)*MM;
+  /* توزيع عناصر كل وثيقة على صفحات A4 دون قطع أي صورة (مثل الطباعة تمامًا) */
+  for(const p of [...box.querySelectorAll('.page')]){
+   const kids=[...p.children],groups=[[]];let acc=0;
+   for(const k of kids){const cs=getComputedStyle(k),h=k.offsetHeight+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0);
+    if(acc+h>maxH&&groups[groups.length-1].length){groups.push([]);acc=0}
+    groups[groups.length-1].push(k);acc+=h}
+   let last=p;groups.slice(1).forEach(g=>{const np=document.createElement('div');np.className='page';g.forEach(k=>np.appendChild(k));box.insertBefore(np,last.nextSibling);last=np});
+  }
+  numberPages(box);
+  for(const p of box.querySelectorAll('.page'))out.push(await html2canvas(p,{scale:2,backgroundColor:'#fff',useCORS:true}))
+ }finally{box.remove()}return out}
+async function makePDF(){
+ const cs=await pagesToCanvases(),{jsPDF}=window.jspdf,pdf=new jsPDF({unit:'mm',format:'a4'});let first=true;
+ for(const c of cs){const ph=Math.round(c.width*297/210);
+  for(let y=0;y<c.height;y+=ph){const h=Math.min(ph,c.height-y),t=document.createElement('canvas');t.width=c.width;t.height=h;t.getContext('2d').drawImage(c,0,y,c.width,h,0,0,c.width,h);
+   if(!first)pdf.addPage();first=false;pdf.addImage(t.toDataURL('image/jpeg',.92),'JPEG',0,0,210,h*210/c.width)}}
+ return pdf.output('blob')}
+async function pvOut(kind){
+ if(!window.html2canvas||!window.jspdf){toast('تعذّر تحميل مكتبات التصدير (يلزم اتصال بالإنترنت)');return}
+ toast('جارٍ التجهيز...');
+ try{const name='documents-'+new Date().toISOString().slice(0,10);let files;
+  if(kind==='img'){const cs=await pagesToCanvases();files=await Promise.all(cs.map((c,i)=>new Promise(r=>c.toBlob(b=>r(new File([b],name+(cs.length>1?'-'+(i+1):'')+'.jpg',{type:'image/jpeg'})),'image/jpeg',.92))))}
+  else files=[new File([await makePDF()],name+'.pdf',{type:'application/pdf'})];
+  if(kind==='share'){let can=false;try{can=!!(navigator.canShare&&navigator.canShare({files}))}catch(e){}
+   if(can){try{await navigator.share({files,title:'مستندات'});return}catch(e){if(e&&e.name==='AbortError')return}}
+   toast('المشاركة المباشرة غير متاحة هنا؛ احفظ الملف ثم أرفقه يدويًا في واتساب أو البريد')}
+  for(const f of files)await saveFile(f.name,f)
+ }catch(e){toast('تعذّر إنشاء الملف')}}
+
+/* ===== استخراج البيانات من صورة الوثيقة بواسطة Claude ===== */
+let aiOK=false;
+(async()=>{try{if(typeof claude==='undefined')return;const sm=await claude.use('sample');const l=sm&&await sm.limits();aiOK=!!(l&&l.images)}catch(e){}})();
+const dataBlob=async f=>f.data.startsWith('data:')?new Blob([b64u8(f.data.split(',')[1])],{type:'image/jpeg'}):await (await fetch(f.data)).blob();
+const aiD=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||'')?v:parseD(maskD(v||''));
+const AI_PROMPT='الصور المرفقة هي وجه/وجها وثيقة رسمية (هوية أو جواز سفر أو رخصة أو غيرها). اقرأ ما هو مكتوب بوضوح فقط ولا تخمّن. أعد JSON فقط بهذه المفاتيح: type (نوع الوثيقة بالعربية مثل هوية أو جواز سفر أو رخصة قيادة), type_en (نوعها بالإنجليزية), num (رقم الوثيقة بالأرقام الإنجليزية), org (الجهة المصدِّرة بالعربية), org_en (بالإنجليزية), iss (تاريخ الإصدار بصيغة dd-mm-yyyy), exp (تاريخ الانتهاء بصيغة dd-mm-yyyy), name_ar (اسم حامل الوثيقة بالعربية), name_en (بالإنجليزية), address (العنوان إن وُجد بالعربية), address_en (بالإنجليزية). اجعل القيمة "" لأي حقل غير واضح.';
+async function aiFill(i){
+ const it=cur.items[i],imgs=it.files.filter(f=>f.type.startsWith('image')).slice(0,2);
+ if(!imgs.length){toast('أضف صورة للوثيقة أولًا (الاستخراج يعمل مع الصور فقط وليس PDF)');return}
+ let sm=null;try{sm=await claude.use('sample')}catch(e){}
+ if(!sm){toast('الاستخراج غير متاح هنا. افتح الصفحة من داخل تطبيق Claude (من بطاقة الصفحة في المحادثة أو من معرض الصفحات) وليس كرابط مباشر ثم أعد المحاولة');return}
+ let lim=null;try{lim=await sm.limits()}catch(e){}
+ if(!(lim&&lim.images)){toast('إرسال الصور غير متاح في هذا العرض');return}
+ toast('جارٍ قراءة الصورة... قد يستغرق بضع ثوانٍ');
+ try{const r=await sm.json(AI_PROMPT,{images:await Promise.all(imgs.map(dataBlob))});
+  const set=(o,k,v)=>{if(v&&!String(o[k]||'').trim())o[k]=String(v).trim()};
+  ['type','type_en','org','org_en'].forEach(k=>set(it,k,r[k]));
+  set(it,'num',toEn(r.num||''));set(it,'iss',aiD(r.iss));set(it,'exp',aiD(r.exp));
+  if(!$('f_title').value.trim()&&r.name_ar)$('f_title').value=r.name_ar;
+  if(!$('f_title_en').value.trim()&&r.name_en)$('f_title_en').value=r.name_en;
+  if(i===0){set(cur,'address',r.address);set(cur,'address_en',r.address_en)}
+  drawItems();toast('تمت التعبئة، راجع البيانات وصحّحها قبل الحفظ')
+ }catch(e){toast(e&&e.code==='not_granted'?'لم تُمنح الصلاحية':'تعذّر الاستخراج، حاول بصورة أوضح')}}
+
+/* ===== التصدير والنسخ الاحتياطي ===== */
+async function saveFile(filename,data){
+ try{const dl=await claude.use('downloads');
+  if(dl){await dl.save({filename,data});return true}}catch(e){if(e&&e.code==='declined')return false}
+ const a=document.createElement('a');a.href=URL.createObjectURL(data instanceof Blob?data:new Blob([data]));a.download=filename;a.click();return true}
+function exportCSV(){
+ const h=['العنوان','Title (EN)','الجوال','البريد','العنوان','Address (EN)','النوع','Type (EN)','الرقم','الجهة','Issuer (EN)','تاريخ الإصدار','تاريخ الانتهاء','الحالة','الوسوم','ملاحظات','Notes (EN)'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const r=filtered().flatMap(g=>g.items.map(d=>[g.title,g.title_en,g.phone,g.email,g.address,g.address_en,d.type,d.type_en,d.num,d.org,d.org_en,fmtD(d.iss),fmtD(d.exp),SL[status(d)],d.tags,d.notes,d.notes_en].map(q).join(',')));
+ saveFile('documents.csv',new Blob(['\ufeff'+h.map(q).join(',')+'\n'+r.join('\n')],{type:'text/csv;charset=utf-8'}))}
+async function backup(){
+ const pw=await ask('كلمة سر لتشفير النسخة الاحتياطية (اتركها فارغة لحفظها بدون تشفير):',{input:'password'});
+ if(pw===null)return;
+ toast('جارٍ تجهيز النسخة...');let txt=JSON.stringify(await docsForBackup());if(pw)txt=await enc(txt,pw);
+ if(await saveFile(pw?'archive-backup-encrypted.json':'archive-backup.json',new Blob([txt],{type:'application/json'}))){ls.set('lastBackup',Date.now());render();toast('تم حفظ النسخة الاحتياطية')}}
+$('imp').onchange=async e=>{
+ try{let obj=JSON.parse(await e.target.files[0].text());
+  if(obj&&obj.enc){const pw=await ask('الملف مشفّر. أدخل كلمة السر:',{input:'password'});if(pw===null){e.target.value='';return}
+   try{obj=JSON.parse(await dec(obj,pw))}catch(_){toast('كلمة السر غير صحيحة');e.target.value='';return}}
+  const arr=obj;if(!Array.isArray(arr))throw 0;
+  let n=0;for(const x of arr){if(!x.id||!(x.title||x.title_en))continue;toast('جارٍ الاستيراد '+(++n)+' / '+arr.length);await persist(norm(x))}
+  if(!cloud)docs=(await dbAll()).map(norm);render();toast('تم الاستيراد')}catch(x){toast('ملف النسخة الاحتياطية غير صالح')}
+ e.target.value=''};
+
+['q','ft','fs','fd1','fd2','so'].forEach(i=>$(i).addEventListener('input',render));
+/* ===== التخزين السحابي (مرتبط بحسابك عند الفتح من داخل Claude) ===== */
+let cloud=null,migDone=false,pendingLocal=[];
+const dataBytes=async u=>{if(u.startsWith('data:')){const b=atob(u.split(',')[1]),r=new Uint8Array(b.length);for(let i=0;i<b.length;i++)r[i]=b.charCodeAt(i);return r}
+ return new Uint8Array(await (await fetch(u)).arrayBuffer())};
+const dataToBlob=u=>{const m=/^data:([^;,]+)/.exec(u);return new Blob([b64u8(u.split(',')[1])],{type:m?m[1]:'application/octet-stream'})};
+function setMode(){$('mode').textContent=cloud?'☁️ متزامن مع حسابك: تظهر وثائقك في تطبيق سطح المكتب والموقع والجوال':'💾 محفوظ على هذا الجهاز فقط. افتح الصفحة من داخل Claude لتفعيل المزامنة بين أجهزتك'+(cloudWhy?' ['+cloudWhy+']':'')}
+let cloudWhy='';
+async function initCloud(){
+ try{if(typeof claude==='undefined'){cloudWhy='لا توجد خدمة Claude في هذه النافذة';return false}
+  const [d0,u0,a0]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('assets')]);
+  if(!d0||!u0||!a0){cloudWhy='غير متاح: '+[!d0&&'db',!u0&&'user',!a0&&'assets'].filter(Boolean).join(' + ');return false}
+  const uid=await u0.id();if(!uid){cloudWhy='لا يوجد معرّف للمستخدم';return false}
+  cloud={col:d0.collection('data/users/'+uid),assets:a0};return true
+ }catch(e){cloud=null;cloudWhy='خطأ: '+((e&&(e.code||e.message))||e);return false}}
+function hydrate(d){if(!d||!Array.isArray(d.items))return null;const g=structuredClone(d);
+ g.items=g.items.map(i=>({...newItem(),...i,files:(i.files||[]).filter(f=>f.aid).map(f=>({name:f.name,type:f.type,aid:f.aid,data:'/_blob/'+f.aid}))}));return g}
+async function persist(d){
+ if(!cloud)return dbPut(d);
+ for(const it of d.items)for(const f of it.files){
+  if(!f.aid&&f.data&&f.data.startsWith('data:')){const r=await cloud.assets.upload(dataToBlob(f.data));f.aid=r.id;f.data='/_blob/'+r.id}}
+ const out={...d,items:d.items.map(i=>({...i,files:i.files.filter(f=>f.aid).map(f=>({name:f.name,type:f.type,aid:f.aid}))}))};
+ await cloud.col.doc(d.id).set(out)}
+async function removeDoc(id){
+ if(!cloud)return dbDel(id);
+ const g=docs.find(x=>x.id===id);
+ await cloud.col.doc(id).delete();
+ if(g)g.items.forEach(i=>i.files.forEach(f=>{if(f.aid)cloud.assets.delete(f.aid).catch(()=>{})}))}
+async function docsForBackup(){
+ const out=[];
+ for(const g of docs){const c=structuredClone(g);
+  for(const it of c.items)for(const f of it.files){
+   if(!f.data.startsWith('data:')){try{f.data=await rd(await (await fetch(f.data)).blob())}catch(e){}}
+   delete f.aid}
+  out.push(c)}
+ return out}
+async function runMig(){
+ if(migDone||!cloud)return;migDone=true;
+ const have=new Set(docs.map(g=>g.id)),todo=pendingLocal.filter(g=>!have.has(g.id));
+ if(!todo.length||ls.get('mig_no'))return;
+ if(!await ask('وُجد '+todo.length+' عنوان محفوظ على هذا الجهاز ولم يُحفظ في حسابك. هل تنقله الآن إلى حسابك ليظهر على كل أجهزتك؟\n(تبقى نسخته على هذا الجهاز أيضًا)')){ls.set('mig_no','1');return}
+ let n=0,bad=0;
+ for(const g of todo){toast('جارٍ النقل '+(++n)+' / '+todo.length);try{await persist(structuredClone(g))}catch(e){bad++}}
+ toast(bad?('تم نقل '+(todo.length-bad)+' وتعذّر نقل '+bad+'. حاول مرة أخرى بالنسخ الاحتياطي والاستيراد'):'تم نقل بياناتك إلى حسابك')}
+async function migNow(){
+ if(!cloud){toast('الربط بحسابك غير مفعّل في هذا العرض. أغلق الصفحة وافتحها من داخل Claude');return}
+ const have=new Set(docs.map(g=>g.id));
+ if(!pendingLocal.filter(g=>!have.has(g.id)).length){toast('لا توجد بيانات على هذا الجهاز تحتاج إلى نقل');return}
+ ls.del('mig_no');migDone=false;$('sdlg').close();await runMig()}
+async function postLoad(){
+ await runMig();alerts();
+ if(!ls.get('cuh')&&!ls.get('nosetup'))openS()}
+(async()=>{
+ let local=[];
+ try{db=await openDB();const raw=await dbAll();for(const r of raw){if(Array.isArray(r.items))local.push(r);else{const n=norm(r);await dbPut(n);local.push(n)}}}catch(e){db=null}
+ pendingLocal=local;
+ if(await initCloud()){
+  let first=true;
+  cloud.col.onSnapshot(snap=>{docs=snap.docs.map(x=>hydrate(x.data())).filter(Boolean);setMode();render();
+   if(first){first=false;if(!document.body.classList.contains('locked'))postLoad()}},
+   e=>{toast('تعذّر الاتصال بحسابك. جرّب إعادة فتح الصفحة')})
+ }else{
+  docs=local;setMode();render();
+  if(!db)$('list').innerHTML='<p class="m">تعذّر فتح التخزين المحلي في هذا المتصفح.</p>';
+  else if(!document.body.classList.contains('locked'))postLoad()}
+})();
+
+</script>
+</body>
+</html>
+
+</body></html>
