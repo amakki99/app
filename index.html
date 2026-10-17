@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تطبيقي المتزامن</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 25px; max-width: 480px; margin: auto; }
+    textarea { width: 100%; height: 130px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; }
+    button { padding: 10px 18px; margin: 8px 4px 0 0; border: none; border-radius: 6px; background-color: #0070f3; color: white; cursor: pointer; font-size: 14px; }
+    button:last-of-type { background-color: #eaeaea; color: #333; }
+    #status { margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h3>مزامنة البيانات بين الأجهزة</h3>
+  <textarea id="dataBox" placeholder="اكتب أي ملاحظة أو بيانات هنا..."></textarea>
+  <br>
+  <button onclick="saveData()">حفظ ومزامنة</button>
+  <button onclick="loadData()">تحديث وجلب البيانات</button>
+  <div id="status"></div>
+
+  <script>
+    // ضع رابط المشروع والمفتاح بين علامتي التنصيص
+    const SUPABASE_URL = "https://gbrelsfdoiweaycpbgjd.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_3INtgPuK38hO4UcqPn6wXg_uZziH7ex";
+
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function saveData() {
+      const text = document.getElementById("dataBox").value;
+      const status = document.getElementById("status");
+      status.style.color = "blue";
+      status.innerText = "جاري الحفظ...";
+
+      const { error } = await db
+        .from('my_app_data')
+        .upsert({ id: 'device_sync_1', content: text, updated_at: new Date() });
+
+      if (error) {
+        status.style.color = "red";
+        status.innerText = "خطأ: " + error.message;
+      } else {
+        status.style.color = "green";
+        status.innerText = "تم الحفظ بنجاح في السحابة!";
+      }
+    }
+
+    async function loadData() {
+      const status = document.getElementById("status");
+      status.style.color = "blue";
+      status.innerText = "جاري جلب أحدث البيانات...";
+
+      const { data, error } = await db
+        .from('my_app_data')
+        .select('content')
+        .eq('id', 'device_sync_1')
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        status.style.color = "red";
+        status.innerText = "خطأ: " + error.message;
+      } else if (data) {
+        document.getElementById("dataBox").value = data.content;
+        status.style.color = "green";
+        status.innerText = "تم جلب البيانات بنجاح!";
+      } else {
+        status.innerText = "";
+      }
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
