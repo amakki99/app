@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أرشيف المستندات والوثائق</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- محرك المزامنة السحابية الموحد -->
+<script src="/sync.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f6fa;--card:#fff;--tx:#1e2430;--mut:#6b7385;--bd:#dde2ec;--pr:#2459d6;--ok:#16a34a;--wr:#d97706;--er:#dc2626}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b1f2a;--tx:#e8ebf2;--mut:#9aa3b5;--bd:#2c3242;--pr:#6c93ff}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b1f2a;--tx:#e8ebf2;--mut:#9aa3b5;--bd:#2c3242;--pr:#6c93ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Cairo,Tahoma,Arial,sans-serif;font-size:15px}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+h1{font-size:18px;margin:0;flex:1;min-width:140px}
+button,.btn{font:inherit;background:var(--pr);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
+button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+button.dng{background:var(--er)}
+button.sm{padding:4px 9px;font-size:13px}
+main{max-width:1100px;margin:0 auto;padding:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;width:100%}
+.bar input,.bar select{width:auto;flex:1;min-width:120px}
+.bar #q{flex:3;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{height:130px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:34px;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.cb{padding:10px 12px;flex:1}
+.cb h3{margin:0 0 4px;font-size:16px}
+.m{color:var(--mut);font-size:13px;margin:2px 0}
+.ca{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--bd);flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:12px;border-radius:99px;padding:1px 9px;color:#fff;background:var(--mut)}
+.b-valid{background:var(--ok)}.b-soon{background:var(--wr)}.b-expired{background:var(--er)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+th,td{padding:8px 10px;border-bottom:1px solid var(--bd);text-align:right}
+.tw{overflow-x:auto}
+dialog{border:1px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);width:min(900px,95vw);max-height:92vh;padding:16px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.f4{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1.3fr;gap:10px}
+@media(max-width:700px){.f4{grid-template-columns:1fr 1fr}}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.f2{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--mut);display:block;margin-bottom:3px}
+.drop{border:2px dashed var(--bd);border-radius:10px;padding:16px;text-align:center;color:var(--mut);cursor:pointer;margin-top:10px}
+.drop.on{border-color:var(--pr);color:var(--pr)}
+.files{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.fi{position:relative;width:84px;height:84px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--bg)}
+.fi img{width:100%;height:100%;object-fit:cover}
+.fi b{position:absolute;top:2px;left:2px;background:var(--er);color:#fff;border-radius:50%;width:20px;height:20px;line-height:20px;text-align:center;cursor:pointer}
+.vimg{max-width:100%;border:1px solid var(--bd);border-radius:8px;margin:6px 0;display:block}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+input[dir=ltr],textarea[dir=ltr]{text-align:left}
+.th{width:100%;flex-direction:row;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ct{font-size:15px;line-height:1.7;color:var(--tx);direction:ltr;text-align:left;flex:none;max-width:58%;overflow-wrap:anywhere}
+.en{direction:ltr;text-align:left;unicode-bidi:plaintext}
+label.chip{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--bd);border-radius:99px;padding:3px 11px;margin:3px;cursor:pointer;color:var(--tx);font-size:13px}
+label.chip input{width:auto}
+.item{border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:10px}
+.ih{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.vt{margin:4px 0}.vt th{width:18%;text-align:right;color:var(--mut);font-weight:600}
+dialog form,#items{max-height:none}
+#stats{background:#0b0f19;padding:16px 14px;border-bottom:1px solid #1c2438}
+.sg{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:760px){.sg{grid-template-columns:1fr 1fr;gap:10px}}
+.sc{background:#141b2d;border:1px solid #232d47;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s,transform .15s;color:#fff}
+.sc:hover{border-color:#3b4c7a;transform:translateY(-1px)}
+.sc.on{border-color:#6c93ff}
+.si{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.sb{flex:1;min-width:0}
+.sl{color:#8fa0c0;font-size:14px;line-height:1.4}
+.sn{font-size:30px;font-weight:700;line-height:1.2;margin-top:2px}
+@media(max-width:760px){.sc{padding:12px;gap:10px}.si{width:42px;height:42px;font-size:19px}.sn{font-size:24px}.sl{font-size:12px}}
+#pvbar{flex-wrap:wrap}
+.pair{display:flex;gap:6mm;justify-content:center;align-items:flex-start;margin-top:8px}
+.page .pair img{max-width:49%;max-height:130mm;margin:0}
+.cards{display:flex;flex-wrap:wrap;gap:6mm;justify-content:center;margin-top:8mm}
+.page img.card85{width:85.6mm;height:54mm;max-width:none;max-height:none;margin:0;border:.3mm solid #aaa;object-fit:contain}
+.warn{background:rgba(245,158,11,.15);border:1px solid #f0b44c;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#lock{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;align-items:center;justify-content:center}
+body.locked #lock{display:flex}
+body.locked>*:not(#lock){display:none!important}
+.lbox{width:min(340px,90vw);text-align:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:8px;display:none;z-index:99}
+/* الطباعة A4 */
+#print{display:none}
+#print.pv{display:block;position:fixed;inset:0;overflow:auto;background:#888;z-index:50;padding:50px 0 20px}
+#pvbar{position:fixed;top:0;right:0;left:0;background:var(--card);padding:8px;display:none;gap:8px;z-index:60;justify-content:center}
+#pvbar.on{display:flex}
+.page{background:#fff;color:#000;width:210mm;min-height:297mm;margin:0 auto 12px;padding:14mm;direction:rtl;position:relative}
+.page h2{margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid #2459d6;font-size:20px}
+.page table{background:#fff;border:1px solid #999}
+.page .pt th,.page th{width:18%;background:#eef1f8;width:30%}
+.page td,.page .pt th,.page th{border:1px solid #bbb;color:#000}
+.page.pdfpg{padding:6mm;display:flex;align-items:center;justify-content:center}
+.page.pdfpg img{max-width:100%;margin:0}
+.pnum{position:absolute;left:0;right:0;bottom:5mm;text-align:center;font-size:13px;color:#333;direction:ltr}
+.page img{display:block;max-width:100%;max-height:150mm;object-fit:contain;margin:8px auto}
+@page{size:A4;margin:0}
+@media print{
+ body>*:not(#print){display:none!important}
+ #print{display:block!important;position:static!important;background:#fff!important;padding:0!important}
+ .page{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+}
+</style>
+</head>
+<body>
+<header>
+ <h1>📁 أرشيف المستندات والوثائق</h1>
+ <button onclick="openForm()">+ عنوان جديد</button>
+ <button class="sec" onclick="printSel()">🖨 طباعة المحدد</button>
+ <button class="sec" onclick="exportCSV()">CSV</button>
+ <button class="sec" onclick="backup()">نسخ احتياطي</button>
+ <button class="sec" onclick="\$('imp').click()">استيراد</button>
+ <button class="sec" onclick="openS()">🔒 الأمان</button>
+ <button class="sec" onclick="toggleTheme()">🌓</button>
+ <input type="file" id="imp" accept=".json" hidden>
+</header>
+<section id="stats"><div class="sg">
+ <div class="sc" data-f="" onclick="statF('')"><div class="si" style="background:#eef0fb">📄</div><div class="sb"><div class="sl">إجمالي السجلات والملفات</div><div class="sn" id="s_all">0</div></div></div>
+ <div class="sc" data-f="valid" onclick="statF('valid')"><div class="si" style="background:#e8faf1">✅</div><div class="sb"><div class="sl">وثائق سارية الصلاحية</div><div class="sn" id="s_valid" style="color:#10b981">0</div></div></div>
+ <div class="sc" data-f="soon" onclick="statF('soon')"><div class="si" style="background:#fff8e1">⚠️</div><div class="sb"><div class="sl">قريبة الانتهاء (أقل من 30 يوماً)</div><div class="sn" id="s_soon" style="color:#f59e0b">0</div></div></div>
+ <div class="sc" data-f="expired" onclick="statF('expired')"><div class="si" style="background:#fdeaee">⛔</div><div class="sb"><div class="sl">وثائق منتهية الصلاحية</div><div class="sn" id="s_expired" style="color:#ef4444">0</div></div></div>
+</div></section>
+<main>
+ <div id="bk"></div>
+ <div class="bar">
+  <input id="q" type="search" placeholder="🔍 بحث في جميع الحقول...">
+  <select id="ft"><option value="">كل الأنواع</option></select>
+  <select id="fs"><option value="">كل الحالات</option><option value="valid">ساري</option><option value="soon">قارب على الانتهاء</option><option value="expired">منتهي</option><option value="none">بلا تاريخ انتهاء</option></select>
+  <input id="fd1" dir="ltr" inputmode="numeric" maxlength="10" placeholder="من dd-mm-yyyy" title="من تاريخ الإصدار" oninput="this.value=maskD(this.value)"><input id="fd2" dir="ltr" inputmode="numeric" maxlength="10" placeholder="إلى dd-mm-yyyy" title="إلى تاريخ الإصدار" oninput="this.value=maskD(this.value)">
+  <select id="so"><option value="new">الأحدث</option><option value="old">الأقدم</option><option value="az">أبجديًا</option></select>
+  <button class="sec" id="vw" onclick="toggleView()">▦ / ☰</button>
+ </div>
+ <div class="m" id="cnt"></div>
+ <div class="m" id="mode" style="margin-bottom:6px"></div>
+ <div id="list"></div>
+</main>
+
+<dialog id="dlg">
+ <h3 id="dt" style="margin-top:0">ملف جديد</h3>
+ <div class="f4"><div><label>العنوان الرئيسي (مثال: اسمي) *</label><input id="f_title"></div>
+ <div><label>Title in English</label><input id="f_title_en" dir="ltr"></div>
+ <div><label>رقم الموبايل / Mobile</label><input id="f_phone" type="tel" dir="ltr" oninput="this.value=toEn(this.value)" placeholder="+971 50 000 0000"></div>
+ <div><label>البريد الإلكتروني / Email</label><input id="f_email" type="email" dir="ltr" placeholder="name@example.com"></div>
+</div>
+ <h4 style="margin:14px 0 0">الوثائق تحت هذا العنوان</h4>
+ <div id="items"></div>
+ <datalist id="types"></datalist><datalist id="types_en"></datalist>
+ <input type="file" id="fin" multiple accept="application/pdf,image/jpeg,image/png" hidden>
+ <div class="row" style="justify-content:space-between"><button class="sec" onclick="addItem()">+ إضافة وثيقة (هوية، جواز، رخصة...)</button>
+ <span style="display:flex;gap:8px"><button class="sec" onclick="\$('dlg').close()">إلغاء</button><button onclick="save()">حفظ ومزامنة</button></span></div>
+</dialog>
+
+<dialog id="vdlg"><div id="vbody"></div><div class="row"><button class="sec" onclick="\$('vdlg').close()">إغلاق</button></div></dialog>
+<dialog id="adlg" style="width:min(420px,92vw)"><p id="amsg" style="margin-top:0;white-space:pre-line"></p><input id="ain" style="display:none" autocomplete="off"><div class="row"><button class="sec" id="ano">إلغاء</button><button id="aok">موافق</button></div></dialog>
+<dialog id="sdlg" style="width:min(460px,95vw)"><h3 style="margin-top:0">🔒 الأمان والحماية</h3><p class="m" id="sst"></p>
+ <div style="display:grid;gap:8px"><button onclick="setCred()">🔑 تعيين / تغيير اسم المستخدم وكلمة المرور</button><button class="sec" id="spoff" onclick="offCred()">إلغاء الدخول بكلمة المرور</button><button class="sec" onclick="lockNow()">قفل الآن</button></div>
+ <p class="m" style="margin-top:12px">⚠️ اسم المستخدم وكلمة المرور يمنعان الاطلاع العرضي على التطبيق ويُقفل تلقائيًا بعد 5 دقائق بلا نشاط.</p>
+ <div class="row"><button class="sec" onclick="ls.set('nosetup',1);\$('sdlg').close()">إغلاق</button></div></dialog>
+<dialog id="edlg"><h3 style="margin-top:0">⚠️ تنبيه: وثائق تحتاج انتباهك</h3><div id="ebody"></div>
+ <div class="row"><button class="sec" onclick="ls.set('remind',new Date().toISOString().slice(0,10));\$('edlg').close()">عدم الإظهار اليوم</button><button onclick="\$('edlg').close()">إغلاق</button></div></dialog>
+<div id="lock"><div class="lbox"><div style="font-size:42px">🔒</div><h2 style="margin:6px 0">أرشيف المستندات</h2><p class="m">سجّل الدخول للمتابعة</p>
+ <input id="luser" autocomplete="username" dir="ltr" placeholder="اسم المستخدم" style="text-align:center;margin-bottom:8px"><input id="lpin" type="password" autocomplete="current-password" dir="ltr" placeholder="كلمة المرور" style="text-align:center"><div id="lerr" style="color:var(--er);min-height:24px;margin:4px 0"></div><button id="lgo" style="width:100%">دخول</button></div></div>
+<dialog id="pdlg2" style="width:min(460px,95vw)"><h3 style="margin-top:0">🖨 خيارات الطباعة</h3>
+ <label>ما الذي يُطبع؟</label><select id="po_c"><option value="both">البيانات + الصور</option><option value="images">الصور فقط</option><option value="data">البيانات فقط</option></select>
+ <label style="margin-top:10px">حجم الصور</label><select id="po_s"><option value="full">كبيرة (تناسب الصفحة)</option><option value="card">بحجم البطاقة الحقيقي 85.6×54 مم (الوجهان متجاوران)</option></select>
+ <label style="margin-top:10px">رقم الموبايل والبريد وعنوان السكن</label><select id="po_f"><option value="foot">تحت العنوان الرئيسي</option><option value="top">كما هو (أعلى الصفحة وفي الجدول)</option><option value="none">بدون طباعتها</option></select>
+ <div class="row"><button class="sec" onclick="\$('pdlg2').close()">إلغاء</button><button onclick="goPrint()">معاينة</button></div></dialog>
+<div id="pvbar"><button onclick="window.print()">🖨 طباعة</button><button onclick="pvOut('pdf')">📄 ملف PDF</button><button onclick="pvOut('img')">🖼 صورة</button><button class="sec" onclick="closePv()">إغلاق المعاينة</button></div>
+<div id="print"></div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const \$=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toEn=s=>String(s??'').replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776);
+const docHead=it=>{const p=[];if(it.type_en)p.push(`<bdi dir="ltr">${esc(it.type_en)}</bdi>`);if(it.type)p.push(`<bdi dir="rtl">${esc(it.type)}</bdi>`);return p.join('/')||'وثيقة'};
+const fmtD=v=>/^\d{4}-\d{2}-\d{2}\$/.test(v||'')?v.split('-').reverse().join('-'):'';
+const maskD=v=>{const d=toEn(v).replace(/\D/g,'').slice(0,8);return d.length>4?d.slice(0,2)+'-'+d.slice(2,4)+'-'+d.slice(4):d.length>2?d.slice(0,2)+'-'+d.slice(2):d};
+const parseD=v=>{const m=toEn(v).match(/^(\d{2})-(\d{2})-(\d{4})\$/);if(!m)return'';const dt=new Date(+m[3],+m[2]-1,+m[1]);return dt.getDate()==+m[1]&&dt.getMonth()==+m[2]-1?m[3]+'-'+m[2]+'-'+m[1]:''};
+const _m={};
+const ls={get:k=>{try{const v=localStorage.getItem(k);return v===null?(_m[k]??null):v}catch(e){return _m[k]??null}},set:(k,v)=>{_m[k]=String(v);try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete _m[k];try{localStorage.removeItem(k)}catch(e){}}};
+if(ls.get('cuh'))document.body.classList.add('locked');
+
+function ask(msg,o={}){return new Promise(res=>{const d=\$('adlg'),i=$('ain');$('amsg').textContent=msg;i.style.display=o.input?'':'none';i.type=o.input||'text';i.value='';
+ const done=v=>{d.close();res(v)};
+ $('aok').onclick=()=>done(o.input?i.value:true);$('ano').onclick=()=>done(o.input?null:false);
+ d.oncancel=e=>{e.preventDefault();done(o.input?null:false)};
+ i.onkeydown=e=>{if(e.key==='Enter')\$('aok').click()};
+ d.showModal();if(o.input)i.focus()})}
+
+const u8b64=u=>{let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
+const b64u8=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
+async function ckey(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:200000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function enc(text,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+ const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},await ckey(pw,salt),new TextEncoder().encode(text)));
+ return JSON.stringify({enc:1,salt:u8b64(salt),iv:u8b64(iv),data:u8b64(ct)})}
+async function dec(o,pw){return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64u8(o.iv)},await ckey(pw,b64u8(o.salt)),b64u8(o.data)))}
+
+const credHash=async(u,p,salt)=>{const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(u.trim().toLowerCase()+'\n'+p),'PBKDF2',false,['deriveBits']);
+ return u8b64(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:150000,hash:'SHA-256'},k,256)))};
+const credOk=async(u,p)=>(await credHash(u,p,ls.get('cus')||''))===ls.get('cuh');
+function openS(){const on=!!ls.get('cuh');\$('sst').textContent='الدخول بكلمة مرور: '+(on?'مفعّل':'غير مفعّل');$('spoff').style.display=on?'':'none';$('sdlg').showModal()}
+function lockNow(){if(!ls.get('cuh')){toast('فعّل اسم المستخدم وكلمة المرور أولًا');return}
+ document.querySelectorAll('dialog[open]').forEach(d=>d.close());closePv();document.body.classList.add('locked');\$('lpin').value='';$('luser').value='';$('lerr').textContent=''}
+let fails=0,busy=false;
+async function tryUnlock(){if(busy)return;busy=true;
+ if(await credOk(\$('luser').value,$('lpin').value)){fails=0;document.body.classList.remove('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent='';busy=false;postLoad();return}
+ fails++;\$('lerr').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';await new Promise(r=>setTimeout(r,Math.min(fails,6)*1000));busy=false}
+\$('lgo').onclick=tryUnlock;$('lpin').onkeydown=$('luser').onkeydown=e=>{if(e.key==='Enter')tryUnlock()};
+async function checkCur(){const u0=await ask('أدخل اسم المستخدم الحالي',{input:'text'});if(u0===null)return false;
+ const p0=await ask('أدخل كلمة المرور الحالية',{input:'password'});if(p0===null)return false;
+ if(!await credOk(u0,p0)){toast('بيانات الدخول الحالية غير صحيحة');return false}return true}
+async function setCred(){
+ if(ls.get('cuh')&&!await checkCur())return;
+ const u=((await ask('اسم المستخدم الجديد',{input:'text'}))??'').trim();if(!u)return;
+ const p=(await ask('كلمة المرور الجديدة (6 أحرف على الأقل)',{input:'password'}))??'';if(!p)return;
+ if(p.length<6){toast('كلمة المرور قصيرة، يلزم 6 أحرف على الأقل');return}
+ const p2=(await ask('أعد كتابة كلمة المرور للتأكيد',{input:'password'}))??'';if(p2!==p){toast('كلمتا المرور غير متطابقتين');return}
+ const salt=u8b64(crypto.getRandomValues(new Uint8Array(12)));ls.set('cus',salt);ls.set('cuh',await credHash(u,p,salt));toast('تم تفعيل الدخول باسم مستخدم وكلمة مرور');openS()}
+async function offCred(){if(!await checkCur())return;ls.del('cuh');ls.del('cus');toast('تم إلغاء الدخول بكلمة المرور');openS()}
+let idleT;const bump=()=>{clearTimeout(idleT);idleT=setTimeout(()=>{if(ls.get('cuh'))lockNow()},300000)};
+['click','keydown','touchstart'].forEach(e=>addEventListener(e,bump));bump();
+
+const daysLeft=d=>Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
+function alerts(){
+ if(ls.get('remind')===new Date().toISOString().slice(0,10))return;
+ const L=docs.flatMap(g=>g.items.filter(i=>['expired','soon'].includes(status(i))).map(i=>({g,i,n:daysLeft(i)}))).sort((a,b)=>a.n-b.n);
+ if(!L.length)return;
+ \$('ebody').innerHTML=L.map(x=>`<div class="item" style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center" onclick="$('edlg').close();show('${x.g.id}')"><div><b>${esc(x.g.title||x.g.title_en)}</b><div class="m">${esc(x.i.type||x.i.type_en||'وثيقة')} — ${fmtD(x.i.exp)}</div></div><span class="badge b-${status(x.i)}">${x.n<0?'منتهية منذ '+(-x.n)+' يوم':x.n===0?'تنتهي اليوم':'باقي '+x.n+' يوم'}</span></div>`).join('');
+ \$('edlg').showModal()}
+
+function bkBanner(){const b=\$('bk');if(!docs.length){b.innerHTML='';return}
+ const last=+ls.get('lastBackup')||0,d=Math.floor((Date.now()-last)/864e5);
+ b.innerHTML=(!last||d>30)?`<div class="warn">💾 <span>${last?'مضى '+d+' يومًا على آخر نسخة احتياطية':'لم تأخذ أي نسخة احتياطية بعد'}.</span><button class="sm" onclick="backup()">نسخ احتياطي الآن</button></div>`:''}
+const MAXPDF=8*1024*1024;
+let docs=[],view='cards',sel=new Set(),editId=null,cur=null,tgt=0,db;
+const DEF_TYPES=['هوية','جواز سفر','رخصة قيادة','عقد','شهادة','فاتورة','أخرى'];
+if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function toast(m){const t=\$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2800)}
+
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('docs-archive',1);
+ r.onupgradeneeded=()=>r.result.createObjectStore('docs',{keyPath:'id'});
+ r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+const tx=(m,fn
