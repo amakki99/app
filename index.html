@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>أرشيف المستندات والوثائق</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<!-- محرك المزامنة السحابية الموحد -->
-<script src="/sync.js"></script>
+<!-- مكتبة Supabase السحابية -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#f4f6fa;--card:#fff;--tx:#1e2430;--mut:#6b7385;--bd:#dde2ec;--pr:#2459d6;--ok:#16a34a;--wr:#d97706;--er:#dc2626}
@@ -86,7 +86,6 @@ body.locked #lock{display:flex}
 body.locked>*:not(#lock){display:none!important}
 .lbox{width:min(340px,90vw);text-align:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px}
 #toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:8px;display:none;z-index:99}
-/* الطباعة A4 */
 #print{display:none}
 #print.pv{display:block;position:fixed;inset:0;overflow:auto;background:#888;z-index:50;padding:50px 0 20px}
 #pvbar{position:fixed;top:0;right:0;left:0;background:var(--card);padding:8px;display:none;gap:8px;z-index:60;justify-content:center}
@@ -112,6 +111,7 @@ body.locked>*:not(#lock){display:none!important}
 <header>
  <h1>📁 أرشيف المستندات والوثائق</h1>
  <button onclick="openForm()">+ عنوان جديد</button>
+ <button class="sec" onclick="syncNow()">🔄 مزامنة</button>
  <button class="sec" onclick="printSel()">🖨 طباعة المحدد</button>
  <button class="sec" onclick="exportCSV()">CSV</button>
  <button class="sec" onclick="backup()">نسخ احتياطي</button>
@@ -137,7 +137,7 @@ body.locked>*:not(#lock){display:none!important}
   <button class="sec" id="vw" onclick="toggleView()">▦ / ☰</button>
  </div>
  <div class="m" id="cnt"></div>
- <div class="m" id="mode" style="margin-bottom:6px"></div>
+ <div class="m" id="mode" style="margin-bottom:8px"></div>
  <div id="list"></div>
 </main>
 
@@ -161,7 +161,7 @@ body.locked>*:not(#lock){display:none!important}
 <dialog id="sdlg" style="width:min(460px,95vw)"><h3 style="margin-top:0">🔒 الأمان والحماية</h3><p class="m" id="sst"></p>
  <div style="display:grid;gap:8px"><button onclick="setCred()">🔑 تعيين / تغيير اسم المستخدم وكلمة المرور</button><button class="sec" id="spoff" onclick="offCred()">إلغاء الدخول بكلمة المرور</button><button class="sec" onclick="lockNow()">قفل الآن</button></div>
  <p class="m" style="margin-top:12px">⚠️ اسم المستخدم وكلمة المرور يمنعان الاطلاع العرضي على التطبيق ويُقفل تلقائيًا بعد 5 دقائق بلا نشاط.</p>
- <div class="row"><button class="sec" onclick="ls.set('nosetup',1);\$('sdlg').close()">إغلاق</button></div></dialog>
+ <div class="row"><button class="sec" onclick="\$('sdlg').close()">إغلاق</button></div></dialog>
 <dialog id="edlg"><h3 style="margin-top:0">⚠️ تنبيه: وثائق تحتاج انتباهك</h3><div id="ebody"></div>
  <div class="row"><button class="sec" onclick="ls.set('remind',new Date().toISOString().slice(0,10));\$('edlg').close()">عدم الإظهار اليوم</button><button onclick="\$('edlg').close()">إغلاق</button></div></dialog>
 <div id="lock"><div class="lbox"><div style="font-size:42px">🔒</div><h2 style="margin:6px 0">أرشيف المستندات</h2><p class="m">سجّل الدخول للمتابعة</p>
@@ -179,6 +179,49 @@ body.locked>*:not(#lock){display:none!important}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+// إعداد الاتصال المباشر بقاعدة بيانات Supabase
+const SUPABASE_URL = "https://gbrelsfdoiweaycpbgjd.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3INtgPuK38hO4UcqPn6wXg_uZziH7ex";
+let sb = null;
+try {
+  if (window.supabase) {
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+} catch (e) {
+  console.error("Supabase init error:", e);
+}
+
+async function cloudSave(data) {
+  if (!sb) return false;
+  try {
+    const payload = JSON.stringify(data);
+    const { error } = await sb
+      .from('my_app_data')
+      .upsert({ id: 'docs_archive', content: payload, updated_at: new Date() });
+    return !error;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function cloudLoad() {
+  if (!sb) return null;
+  try {
+    const { data, error } = await sb
+      .from('my_app_data')
+      .select('content')
+      .eq('id', 'docs_archive')
+      .single();
+    if (error && error.code !== 'PGRST116') return null;
+    if (data && data.content) {
+      try { return JSON.parse(data.content); } catch (e) { return null; }
+    }
+    return [];
+  } catch (e) {
+    return null;
+  }
+}
+
 const \$=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toEn=s=>String(s??'').replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776);
@@ -213,7 +256,7 @@ function lockNow(){if(!ls.get('cuh')){toast('فعّل اسم المستخدم و
  document.querySelectorAll('dialog[open]').forEach(d=>d.close());closePv();document.body.classList.add('locked');\$('lpin').value='';$('luser').value='';$('lerr').textContent=''}
 let fails=0,busy=false;
 async function tryUnlock(){if(busy)return;busy=true;
- if(await credOk(\$('luser').value,$('lpin').value)){fails=0;document.body.classList.remove('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent='';busy=false;postLoad();return}
+ if(await credOk(\$('luser').value,$('lpin').value)){fails=0;document.body.classList.remove('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent='';busy=false;alerts();return}
  fails++;\$('lerr').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';await new Promise(r=>setTimeout(r,Math.min(fails,6)*1000));busy=false}
 \$('lgo').onclick=tryUnlock;$('lpin').onkeydown=$('luser').onkeydown=e=>{if(e.key==='Enter')tryUnlock()};
 async function checkCur(){const u0=await ask('أدخل اسم المستخدم الحالي',{input:'text'});if(u0===null)return false;
@@ -251,4 +294,90 @@ function toast(m){const t=\$('toast');t.textContent=m;t.style.display='block';cl
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('docs-archive',1);
  r.onupgradeneeded=()=>r.result.createObjectStore('docs',{keyPath:'id'});
  r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
-const tx=(m,fn
+const tx=(m,fn)=>new Promise((res,rej)=>{const t=db.transaction('docs',m),s=t.objectStore('docs'),q=fn(s);
+ t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)});
+const dbAll=()=>tx('readonly',s=>s.getAll());
+const dbPut=d=>tx('readwrite',s=>s.put(d));
+const dbDel=id=>tx('readwrite',s=>s.delete(id));
+const newItem=()=>({id:crypto.randomUUID(),type:'',type_en:'',num:'',org:'',org_en:'',iss:'',exp:'',tags:'',notes:'',notes_en:'',files:[]});
+function norm(d){if(Array.isArray(d.items))return d;
+ return{id:d.id,title:d.title,created:d.created||Date.now(),notes:'',items:[{...newItem(),type:d.type||'',num:d.num||'',org:d.org||'',iss:d.iss||'',exp:d.exp||'',tags:d.tags||'',notes:d.notes||'',files:d.files||[]}]}}
+
+function status(d){if(!d.exp)return'none';const n=Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
+ return n<0?'expired':n<=30?'soon':'valid'}
+const SL={valid:'ساري',soon:'قارب على الانتهاء',expired:'منتهي',none:'بلا انتهاء'};
+const SLE={valid:'Valid',soon:'Expiring soon',expired:'Expired',none:'No expiry'};
+const DEF_EN=['ID Card','Passport','Driving License','Contract','Certificate','Invoice','Other'];
+const badge=d=>`<span class="badge b-${status(d)}">${SL[status(d)]}</span>`;
+function gstatus(g){const o={none:0,valid:1,soon:2,expired:3};let b='none';g.items.forEach(i=>{if(o[status(i)]>o[b])b=status(i)});return b}
+const label=i=>(i.type||i.type_en||'وثيقة')+(i.num?' - '+toEn(i.num):'');
+const labelEn=i=>i.type_en?i.type_en+(i.num?' - '+toEn(i.num):''):'';
+const contact=g=>(g.phone||g.email)?`<div class="ct">${g.phone?'📱 '+esc(toEn(g.phone)):''}${g.phone&&g.email?'<br>':''}${g.email?'✉️ '+esc(g.email):''}</div>`:'';
+const addr=g=>(g.address||g.address_en)?`<p class="m">📍 ${[g.address,g.address_en].filter(Boolean).map(esc).join(' / ')}</p>`:'';
+const enLine=(t,c='m')=>t?`<p class="${c} en">${esc(t)}</p>`:'';
+
+function filtered(){
+ const q=\$('q').value.trim().toLowerCase(),t=$('ft').value,s=$('fs').value,a=parseD($('fd1').value),b=parseD($('fd2').value);
+ const hay=g=>[g.title,g.title_en,g.phone,g.email,g.address,g.address_en,...g.items.flatMap(i=>[i.type,i.type_en,i.num,i.org,i.org_en,i.iss,i.exp,i.notes,i.notes_en,i.tags])].join(' ').toLowerCase();
+ let r=docs.filter(g=>{const its=g.items;
+  if(t&&!its.some(i=>i.type===t))return false;
+  if(s&&!its.some(i=>status(i)===s))return false;
+  if((a||b)&&!its.some(i=>i.iss&&(!a||i.iss>=a)&&(!b||i.iss<=b)))return false;
+  if(q&&!hay(g).includes(q))return false;return true});
+ const so=\$('so').value;
+ r.sort((x,y)=>so==='az'?(x.title||x.title_en||'').localeCompare(y.title||y.title_en||'','ar'):so==='old'?x.created-y.created:y.created-x.created);
+ return r}
+function thumb(g){for(const i of g.items)for(const f of i.files)if(f.type.startsWith('image'))return`<img src="${f.data}" alt="">`;return g.items.some(i=>i.files.length)?'📄':'🗂'}
+const chips=g=>g.items.map(i=>`<span class="badge b-${status(i)}" style="margin:1px">${esc(i.type||i.type_en||'وثيقة')}</span>`).join(' ');
+function stats(){
+ const its=docs.flatMap(g=>g.items),n=k=>its.filter(i=>status(i)===k).length;
+ $('s_all').textContent=docs.length;$('s_valid').textContent=n('valid');$('s_soon').textContent=n('soon');$('s_expired').textContent=n('expired');
+ document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('on',c.dataset.f===\$('fs').value&&c.dataset.f!==''))}
+function statF(v){\$('fs').value=v;render()}
+function render(){
+ stats();bkBanner();
+ const all=docs.flatMap(g=>g.items.map(i=>i.type)).filter(Boolean);
+ const types=[...new Set([...DEF_TYPES,...all])];
+ const cv=$('ft').value;$('ft').innerHTML='<option value="">كل الأنواع</option>'+types.map(t=>`<option ${t===cv?'selected':''}>${esc(t)}</option>`).join('');
+ \$('types').innerHTML=types.map(t=>`<option value="${esc(t)}">`).join('');
+ \$('types_en').innerHTML=[...new Set([...DEF_EN,...docs.flatMap(g=>g.items.map(i=>i.type_en)).filter(Boolean)])].map(t=>`<option value="${esc(t)}">`).join('');
+ const r=filtered();\$('cnt').textContent=`${r.length} من ${docs.length} عنوان`;
+ if(!r.length){\$('list').innerHTML='<p class="m" style="text-align:center;padding:40px">لا توجد بيانات محفوظة بعد.<br>اضغط زر <b>«+ عنوان جديد»</b> في الأعلى لإضافة أول وثيقة والبدء بالمزامنة.</p>';return}
+ const acts=g=>`<button class="sm" onclick="show('${g.id}')">عرض / طباعة</button><button class="sm sec" onclick="openForm('${g.id}')">تعديل</button><button class="sm sec" onclick="cloneG('${g.id}')" title="نسخ الهيكل كقالب لشخص آخر">نسخ</button><button class="sm dng" onclick="del('${g.id}')">حذف</button>`;
+ const ck=g=>`<input type="checkbox" style="width:auto" ${sel.has(g.id)?'checked':''} onchange="tg('${g.id}',this.checked)" title="تحديد لطباعة كل وثائقه">`;
+ if(view==='cards')\$('list').innerHTML='<div class="grid">'+r.map(g=>`<div class="card"><div class="thumb">${thumb(g)}</div><div class="cb"><div class="th"><div><h3>${esc(g.title||g.title_en)}</h3>${enLine(g.title_en)}</div>${contact(g)}</div>${addr(g)}
+  <p class="m">${g.items.length} وثيقة • ${g.items.reduce((n,i)=>n+i.files.length,0)} مرفق</p><div>${chips(g)}</div></div><div class="ca">${ck(g)}${acts(g)}</div></div>`).join('')+'</div>';
+ else \$('list').innerHTML='<div class="tw"><table><tr><th></th><th>العنوان</th><th>الوثائق</th><th>الحالة</th><th></th></tr>'+
+  r.map(g=>`<tr><td>${ck(g)}</td><td><div class="th"><div>${esc(g.title||g.title_en)}${enLine(g.title_en)}</div>${contact(g)}</div></td><td>${chips(g)}</td><td>${badge({exp:null,...{}})&&`<span class="badge b-${gstatus(g)}">${SL[gstatus(g)]}</span>`}</td><td style="white-space:nowrap">${acts(g)}</td></tr>`).join('')+'</table></div>';
+}
+function tg(id,on){on?sel.add(id):sel.delete(id)}
+function toggleView(){view=view==='cards'?'table':'cards';render()}
+function toggleTheme(){const d=document.documentElement,n=(d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))==='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}
+try{const th=localStorage.getItem('theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+
+function openForm(id){
+ editId=id||null;
+ cur=id?structuredClone(docs.find(x=>x.id===id)):{title:'',title_en:'',phone:'',email:'',address:'',address_en:'',notes:'',items:[newItem()]};
+ \$('dt').textContent=id?'تعديل الملف':'عنوان جديد';
+ $('f_title').value=cur.title\vert{}\vert{}'';$('f_title_en').value=cur.title_en||'';$('f_phone').value=cur.phone\vert{}\vert{}'';$('f_email').value=cur.email||'';
+ drawItems();\$('dlg').showModal()}
+
+function cloneG(id){
+ const g=docs.find(x=>x.id===id);editId=null;
+ cur={title:'',title_en:'',phone:'',email:'',address:g.address||'',address_en:g.address_en||'',items:g.items.map(i=>({...newItem(),type:i.type,type_en:i.type_en,org:i.org,org_en:i.org_en}))};
+ \$('dt').textContent='نسخة جديدة من «'+(g.title||g.title_en)+'»';
+ $('f_title').value='';$('f_title_en').value='';$('f_phone').value='';$('f_email').value='';
+ drawItems();\$('dlg').showModal();toast('أدخل بيانات الشخص الجديد')}
+
+function addItem(){cur.items.push(newItem());drawItems();setTimeout(()=>{const l=\$('items').lastElementChild;l&&l.scrollIntoView({behavior:'smooth'})},50)}
+async function rmItem(i){if(await ask('حذف هذه الوثيقة من العنوان؟')){cur.items.splice(i,1);drawItems()}}
+
+function drawItems(){
+ const fld=(i,k,l,ex='')=>`<div><label>${l}</label><input ${ex} value="${esc(cur.items[i][k])}" oninput="${k==='num'?'this.value=toEn(this.value);':''}cur.items[${i}].${k}=this.value"></div>`;
+ \$('items').innerHTML=cur.items.map((it,i)=>`<div class="item"><div class="ih"><b>وثيقة ${i+1}${it.type||it.type_en?' — '+esc(it.type||it.type_en):''}</b><button class="sm dng" onclick="rmItem(${i})">حذف الوثيقة</button></div>
+  <div class="f2">${fld(i,'type','النوع','list="types" placeholder="هوية / جواز / رخصة..."')}${fld(i,'type_en','Type (English)','dir="ltr" list="types_en" placeholder="ID / Passport / License..."')}
+  ${fld(i,'org','الجهة المصدِّرة')}${fld(i,'org_en','Issuer (English)','dir="ltr"')}
+  ${fld(i,'num','رقم الوثيقة / Document No','dir="ltr"')}${fld(i,'tags','وسوم (بفاصلة) / Tags')}
+  ${['iss','exp'].map(k=>`<div><label>\${k==='iss'?'تاريخ الإصدار / Issue date':'تاريخ الانتهاء / Expiry date'}</label><input dir="ltr" inputmode="numeric" maxlength="10" placeholder="dd-mm-yyyy" value="\${fmtD(it[k])}" oninput="this.value=maskD(this.value);cur.items[${i}].${k}=parseD(this.value)"></div>`).join('')}
+  ${i===0?`<div><label>عنوان السكن (يُدخل مرة واحدة ويُطبع مع كل الوثائق)</label><input value="\${esc(cur.address)}" oninput="cur.address=this.value"></div>
+  <div><label>Address (English)</label><input dir="ltr" value="\${esc(cur.address_en)}" oninput="cur.address_
