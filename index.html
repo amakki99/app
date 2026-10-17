@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>أرشيف المستندات والوثائق</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<!-- مكتبة Supabase السحابية -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -161,7 +160,7 @@ body.locked>*:not(#lock){display:none!important}
 <dialog id="sdlg" style="width:min(460px,95vw)"><h3 style="margin-top:0">🔒 الأمان والحماية</h3><p class="m" id="sst"></p>
  <div style="display:grid;gap:8px"><button onclick="setCred()">🔑 تعيين / تغيير اسم المستخدم وكلمة المرور</button><button class="sec" id="spoff" onclick="offCred()">إلغاء الدخول بكلمة المرور</button><button class="sec" onclick="lockNow()">قفل الآن</button></div>
  <p class="m" style="margin-top:12px">⚠️ اسم المستخدم وكلمة المرور يمنعان الاطلاع العرضي على التطبيق ويُقفل تلقائيًا بعد 5 دقائق بلا نشاط.</p>
- <div class="row"><button class="sec" onclick="\$('sdlg').close()">إغلاق</button></div></dialog>
+ <div class="row"><button class="sec" onclick="\$('sdlg').close()">إلغاء</button></div></dialog>
 <dialog id="edlg"><h3 style="margin-top:0">⚠️ تنبيه: وثائق تحتاج انتباهك</h3><div id="ebody"></div>
  <div class="row"><button class="sec" onclick="ls.set('remind',new Date().toISOString().slice(0,10));\$('edlg').close()">عدم الإظهار اليوم</button><button onclick="\$('edlg').close()">إغلاق</button></div></dialog>
 <div id="lock"><div class="lbox"><div style="font-size:42px">🔒</div><h2 style="margin:6px 0">أرشيف المستندات</h2><p class="m">سجّل الدخول للمتابعة</p>
@@ -179,7 +178,6 @@ body.locked>*:not(#lock){display:none!important}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// إعداد الاتصال المباشر بقاعدة بيانات Supabase
 const SUPABASE_URL = "https://gbrelsfdoiweaycpbgjd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3INtgPuK38hO4UcqPn6wXg_uZziH7ex";
 let sb = null;
@@ -222,162 +220,30 @@ async function cloudLoad() {
   }
 }
 
-const \$=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const toEn=s=>String(s??'').replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776);
-const docHead=it=>{const p=[];if(it.type_en)p.push(`<bdi dir="ltr">${esc(it.type_en)}</bdi>`);if(it.type)p.push(`<bdi dir="rtl">${esc(it.type)}</bdi>`);return p.join('/')||'وثيقة'};
-const fmtD=v=>/^\d{4}-\d{2}-\d{2}\$/.test(v||'')?v.split('-').reverse().join('-'):'';
-const maskD=v=>{const d=toEn(v).replace(/\D/g,'').slice(0,8);return d.length>4?d.slice(0,2)+'-'+d.slice(2,4)+'-'+d.slice(4):d.length>2?d.slice(0,2)+'-'+d.slice(2):d};
-const parseD=v=>{const m=toEn(v).match(/^(\d{2})-(\d{2})-(\d{4})\$/);if(!m)return'';const dt=new Date(+m[3],+m[2]-1,+m[1]);return dt.getDate()==+m[1]&&dt.getMonth()==+m[2]-1?m[3]+'-'+m[2]+'-'+m[1]:''};
-const _m={};
-const ls={get:k=>{try{const v=localStorage.getItem(k);return v===null?(_m[k]??null):v}catch(e){return _m[k]??null}},set:(k,v)=>{_m[k]=String(v);try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete _m[k];try{localStorage.removeItem(k)}catch(e){}}};
-if(ls.get('cuh'))document.body.classList.add('locked');
+const \$ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toEn = s => String(s ?? '').replace(/[٠-٩]/g, c => c.charCodeAt(0) - 1632).replace(/[۰-۹]/g, c => c.charCodeAt(0) - 1776);
+const docHead = it => { const p = []; if (it.type_en) p.push(`<bdi dir="ltr">${esc(it.type_en)}</bdi>`); if (it.type) p.push(`<bdi dir="rtl">${esc(it.type)}</bdi>`); return p.join('/') || 'وثيقة'; };
+const fmtD = v => /^\d{4}-\d{2}-\d{2}\$/.test(v || '') ? v.split('-').reverse().join('-') : '';
+const maskD = v => { const d = toEn(v).replace(/\D/g, '').slice(0, 8); return d.length > 4 ? d.slice(0, 2) + '-' + d.slice(2, 4) + '-' + d.slice(4) : d.length > 2 ? d.slice(0, 2) + '-' + d.slice(2) : d; };
+const parseD = v => { const m = toEn(v).match(/^(\d{2})-(\d{2})-(\d{4})\$/); if (!m) return ''; const dt = new Date(+m[3], +m[2] - 1, +m[1]); return dt.getDate() == +m[1] && dt.getMonth() == +m[2] - 1 ? m[3] + '-' + m[2] + '-' + m[1] : ''; };
 
-function ask(msg,o={}){return new Promise(res=>{const d=\$('adlg'),i=$('ain');$('amsg').textContent=msg;i.style.display=o.input?'':'none';i.type=o.input||'text';i.value='';
- const done=v=>{d.close();res(v)};
- $('aok').onclick=()=>done(o.input?i.value:true);$('ano').onclick=()=>done(o.input?null:false);
- d.oncancel=e=>{e.preventDefault();done(o.input?null:false)};
- i.onkeydown=e=>{if(e.key==='Enter')\$('aok').click()};
- d.showModal();if(o.input)i.focus()})}
+const _m = {};
+const ls = {
+  get: k => { try { const v = localStorage.getItem(k); return v === null ? (_m[k] ?? null) : v; } catch (e) { return _m[k] ?? null; } },
+  set: (k, v) => { _m[k] = String(v); try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { delete _m[k]; try { localStorage.removeItem(k); } catch (e) {} }
+};
 
-const u8b64=u=>{let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
-const b64u8=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
-async function ckey(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:200000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
-async function enc(text,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
- const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},await ckey(pw,salt),new TextEncoder().encode(text)));
- return JSON.stringify({enc:1,salt:u8b64(salt),iv:u8b64(iv),data:u8b64(ct)})}
-async function dec(o,pw){return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64u8(o.iv)},await ckey(pw,b64u8(o.salt)),b64u8(o.data)))}
+if (ls.get('cuh')) document.body.classList.add('locked');
 
-const credHash=async(u,p,salt)=>{const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(u.trim().toLowerCase()+'\n'+p),'PBKDF2',false,['deriveBits']);
- return u8b64(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:150000,hash:'SHA-256'},k,256)))};
-const credOk=async(u,p)=>(await credHash(u,p,ls.get('cus')||''))===ls.get('cuh');
-function openS(){const on=!!ls.get('cuh');\$('sst').textContent='الدخول بكلمة مرور: '+(on?'مفعّل':'غير مفعّل');$('spoff').style.display=on?'':'none';$('sdlg').showModal()}
-function lockNow(){if(!ls.get('cuh')){toast('فعّل اسم المستخدم وكلمة المرور أولًا');return}
- document.querySelectorAll('dialog[open]').forEach(d=>d.close());closePv();document.body.classList.add('locked');\$('lpin').value='';$('luser').value='';$('lerr').textContent=''}
-let fails=0,busy=false;
-async function tryUnlock(){if(busy)return;busy=true;
- if(await credOk(\$('luser').value,$('lpin').value)){fails=0;document.body.classList.remove('locked');$('lpin').value='';$('luser').value='';$('lerr').textContent='';busy=false;alerts();return}
- fails++;\$('lerr').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';await new Promise(r=>setTimeout(r,Math.min(fails,6)*1000));busy=false}
-\$('lgo').onclick=tryUnlock;$('lpin').onkeydown=$('luser').onkeydown=e=>{if(e.key==='Enter')tryUnlock()};
-async function checkCur(){const u0=await ask('أدخل اسم المستخدم الحالي',{input:'text'});if(u0===null)return false;
- const p0=await ask('أدخل كلمة المرور الحالية',{input:'password'});if(p0===null)return false;
- if(!await credOk(u0,p0)){toast('بيانات الدخول الحالية غير صحيحة');return false}return true}
-async function setCred(){
- if(ls.get('cuh')&&!await checkCur())return;
- const u=((await ask('اسم المستخدم الجديد',{input:'text'}))??'').trim();if(!u)return;
- const p=(await ask('كلمة المرور الجديدة (6 أحرف على الأقل)',{input:'password'}))??'';if(!p)return;
- if(p.length<6){toast('كلمة المرور قصيرة، يلزم 6 أحرف على الأقل');return}
- const p2=(await ask('أعد كتابة كلمة المرور للتأكيد',{input:'password'}))??'';if(p2!==p){toast('كلمتا المرور غير متطابقتين');return}
- const salt=u8b64(crypto.getRandomValues(new Uint8Array(12)));ls.set('cus',salt);ls.set('cuh',await credHash(u,p,salt));toast('تم تفعيل الدخول باسم مستخدم وكلمة مرور');openS()}
-async function offCred(){if(!await checkCur())return;ls.del('cuh');ls.del('cus');toast('تم إلغاء الدخول بكلمة المرور');openS()}
-let idleT;const bump=()=>{clearTimeout(idleT);idleT=setTimeout(()=>{if(ls.get('cuh'))lockNow()},300000)};
-['click','keydown','touchstart'].forEach(e=>addEventListener(e,bump));bump();
-
-const daysLeft=d=>Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
-function alerts(){
- if(ls.get('remind')===new Date().toISOString().slice(0,10))return;
- const L=docs.flatMap(g=>g.items.filter(i=>['expired','soon'].includes(status(i))).map(i=>({g,i,n:daysLeft(i)}))).sort((a,b)=>a.n-b.n);
- if(!L.length)return;
- \$('ebody').innerHTML=L.map(x=>`<div class="item" style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center" onclick="$('edlg').close();show('${x.g.id}')"><div><b>${esc(x.g.title||x.g.title_en)}</b><div class="m">${esc(x.i.type||x.i.type_en||'وثيقة')} — ${fmtD(x.i.exp)}</div></div><span class="badge b-${status(x.i)}">${x.n<0?'منتهية منذ '+(-x.n)+' يوم':x.n===0?'تنتهي اليوم':'باقي '+x.n+' يوم'}</span></div>`).join('');
- \$('edlg').showModal()}
-
-function bkBanner(){const b=\$('bk');if(!docs.length){b.innerHTML='';return}
- const last=+ls.get('lastBackup')||0,d=Math.floor((Date.now()-last)/864e5);
- b.innerHTML=(!last||d>30)?`<div class="warn">💾 <span>${last?'مضى '+d+' يومًا على آخر نسخة احتياطية':'لم تأخذ أي نسخة احتياطية بعد'}.</span><button class="sm" onclick="backup()">نسخ احتياطي الآن</button></div>`:''}
-const MAXPDF=8*1024*1024;
-let docs=[],view='cards',sel=new Set(),editId=null,cur=null,tgt=0,db;
-const DEF_TYPES=['هوية','جواز سفر','رخصة قيادة','عقد','شهادة','فاتورة','أخرى'];
-if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-function toast(m){const t=\$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2800)}
-
-function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('docs-archive',1);
- r.onupgradeneeded=()=>r.result.createObjectStore('docs',{keyPath:'id'});
- r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
-const tx=(m,fn)=>new Promise((res,rej)=>{const t=db.transaction('docs',m),s=t.objectStore('docs'),q=fn(s);
- t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)});
-const dbAll=()=>tx('readonly',s=>s.getAll());
-const dbPut=d=>tx('readwrite',s=>s.put(d));
-const dbDel=id=>tx('readwrite',s=>s.delete(id));
-const newItem=()=>({id:crypto.randomUUID(),type:'',type_en:'',num:'',org:'',org_en:'',iss:'',exp:'',tags:'',notes:'',notes_en:'',files:[]});
-function norm(d){if(Array.isArray(d.items))return d;
- return{id:d.id,title:d.title,created:d.created||Date.now(),notes:'',items:[{...newItem(),type:d.type||'',num:d.num||'',org:d.org||'',iss:d.iss||'',exp:d.exp||'',tags:d.tags||'',notes:d.notes||'',files:d.files||[]}]}}
-
-function status(d){if(!d.exp)return'none';const n=Math.ceil((new Date(d.exp)-new Date().setHours(0,0,0,0))/864e5);
- return n<0?'expired':n<=30?'soon':'valid'}
-const SL={valid:'ساري',soon:'قارب على الانتهاء',expired:'منتهي',none:'بلا انتهاء'};
-const SLE={valid:'Valid',soon:'Expiring soon',expired:'Expired',none:'No expiry'};
-const DEF_EN=['ID Card','Passport','Driving License','Contract','Certificate','Invoice','Other'];
-const badge=d=>`<span class="badge b-${status(d)}">${SL[status(d)]}</span>`;
-function gstatus(g){const o={none:0,valid:1,soon:2,expired:3};let b='none';g.items.forEach(i=>{if(o[status(i)]>o[b])b=status(i)});return b}
-const label=i=>(i.type||i.type_en||'وثيقة')+(i.num?' - '+toEn(i.num):'');
-const labelEn=i=>i.type_en?i.type_en+(i.num?' - '+toEn(i.num):''):'';
-const contact=g=>(g.phone||g.email)?`<div class="ct">${g.phone?'📱 '+esc(toEn(g.phone)):''}${g.phone&&g.email?'<br>':''}${g.email?'✉️ '+esc(g.email):''}</div>`:'';
-const addr=g=>(g.address||g.address_en)?`<p class="m">📍 ${[g.address,g.address_en].filter(Boolean).map(esc).join(' / ')}</p>`:'';
-const enLine=(t,c='m')=>t?`<p class="${c} en">${esc(t)}</p>`:'';
-
-function filtered(){
- const q=\$('q').value.trim().toLowerCase(),t=$('ft').value,s=$('fs').value,a=parseD($('fd1').value),b=parseD($('fd2').value);
- const hay=g=>[g.title,g.title_en,g.phone,g.email,g.address,g.address_en,...g.items.flatMap(i=>[i.type,i.type_en,i.num,i.org,i.org_en,i.iss,i.exp,i.notes,i.notes_en,i.tags])].join(' ').toLowerCase();
- let r=docs.filter(g=>{const its=g.items;
-  if(t&&!its.some(i=>i.type===t))return false;
-  if(s&&!its.some(i=>status(i)===s))return false;
-  if((a||b)&&!its.some(i=>i.iss&&(!a||i.iss>=a)&&(!b||i.iss<=b)))return false;
-  if(q&&!hay(g).includes(q))return false;return true});
- const so=\$('so').value;
- r.sort((x,y)=>so==='az'?(x.title||x.title_en||'').localeCompare(y.title||y.title_en||'','ar'):so==='old'?x.created-y.created:y.created-x.created);
- return r}
-function thumb(g){for(const i of g.items)for(const f of i.files)if(f.type.startsWith('image'))return`<img src="${f.data}" alt="">`;return g.items.some(i=>i.files.length)?'📄':'🗂'}
-const chips=g=>g.items.map(i=>`<span class="badge b-${status(i)}" style="margin:1px">${esc(i.type||i.type_en||'وثيقة')}</span>`).join(' ');
-function stats(){
- const its=docs.flatMap(g=>g.items),n=k=>its.filter(i=>status(i)===k).length;
- $('s_all').textContent=docs.length;$('s_valid').textContent=n('valid');$('s_soon').textContent=n('soon');$('s_expired').textContent=n('expired');
- document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('on',c.dataset.f===\$('fs').value&&c.dataset.f!==''))}
-function statF(v){\$('fs').value=v;render()}
-function render(){
- stats();bkBanner();
- const all=docs.flatMap(g=>g.items.map(i=>i.type)).filter(Boolean);
- const types=[...new Set([...DEF_TYPES,...all])];
- const cv=$('ft').value;$('ft').innerHTML='<option value="">كل الأنواع</option>'+types.map(t=>`<option ${t===cv?'selected':''}>${esc(t)}</option>`).join('');
- \$('types').innerHTML=types.map(t=>`<option value="${esc(t)}">`).join('');
- \$('types_en').innerHTML=[...new Set([...DEF_EN,...docs.flatMap(g=>g.items.map(i=>i.type_en)).filter(Boolean)])].map(t=>`<option value="${esc(t)}">`).join('');
- const r=filtered();\$('cnt').textContent=`${r.length} من ${docs.length} عنوان`;
- if(!r.length){\$('list').innerHTML='<p class="m" style="text-align:center;padding:40px">لا توجد بيانات محفوظة بعد.<br>اضغط زر <b>«+ عنوان جديد»</b> في الأعلى لإضافة أول وثيقة والبدء بالمزامنة.</p>';return}
- const acts=g=>`<button class="sm" onclick="show('${g.id}')">عرض / طباعة</button><button class="sm sec" onclick="openForm('${g.id}')">تعديل</button><button class="sm sec" onclick="cloneG('${g.id}')" title="نسخ الهيكل كقالب لشخص آخر">نسخ</button><button class="sm dng" onclick="del('${g.id}')">حذف</button>`;
- const ck=g=>`<input type="checkbox" style="width:auto" ${sel.has(g.id)?'checked':''} onchange="tg('${g.id}',this.checked)" title="تحديد لطباعة كل وثائقه">`;
- if(view==='cards')\$('list').innerHTML='<div class="grid">'+r.map(g=>`<div class="card"><div class="thumb">${thumb(g)}</div><div class="cb"><div class="th"><div><h3>${esc(g.title||g.title_en)}</h3>${enLine(g.title_en)}</div>${contact(g)}</div>${addr(g)}
-  <p class="m">${g.items.length} وثيقة • ${g.items.reduce((n,i)=>n+i.files.length,0)} مرفق</p><div>${chips(g)}</div></div><div class="ca">${ck(g)}${acts(g)}</div></div>`).join('')+'</div>';
- else \$('list').innerHTML='<div class="tw"><table><tr><th></th><th>العنوان</th><th>الوثائق</th><th>الحالة</th><th></th></tr>'+
-  r.map(g=>`<tr><td>${ck(g)}</td><td><div class="th"><div>${esc(g.title||g.title_en)}${enLine(g.title_en)}</div>${contact(g)}</div></td><td>${chips(g)}</td><td>${badge({exp:null,...{}})&&`<span class="badge b-${gstatus(g)}">${SL[gstatus(g)]}</span>`}</td><td style="white-space:nowrap">${acts(g)}</td></tr>`).join('')+'</table></div>';
-}
-function tg(id,on){on?sel.add(id):sel.delete(id)}
-function toggleView(){view=view==='cards'?'table':'cards';render()}
-function toggleTheme(){const d=document.documentElement,n=(d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))==='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}
-try{const th=localStorage.getItem('theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
-
-function openForm(id){
- editId=id||null;
- cur=id?structuredClone(docs.find(x=>x.id===id)):{title:'',title_en:'',phone:'',email:'',address:'',address_en:'',notes:'',items:[newItem()]};
- \$('dt').textContent=id?'تعديل الملف':'عنوان جديد';
- $('f_title').value=cur.title\vert{}\vert{}'';$('f_title_en').value=cur.title_en||'';$('f_phone').value=cur.phone\vert{}\vert{}'';$('f_email').value=cur.email||'';
- drawItems();\$('dlg').showModal()}
-
-function cloneG(id){
- const g=docs.find(x=>x.id===id);editId=null;
- cur={title:'',title_en:'',phone:'',email:'',address:g.address||'',address_en:g.address_en||'',items:g.items.map(i=>({...newItem(),type:i.type,type_en:i.type_en,org:i.org,org_en:i.org_en}))};
- \$('dt').textContent='نسخة جديدة من «'+(g.title||g.title_en)+'»';
- $('f_title').value='';$('f_title_en').value='';$('f_phone').value='';$('f_email').value='';
- drawItems();\$('dlg').showModal();toast('أدخل بيانات الشخص الجديد')}
-
-function addItem(){cur.items.push(newItem());drawItems();setTimeout(()=>{const l=\$('items').lastElementChild;l&&l.scrollIntoView({behavior:'smooth'})},50)}
-async function rmItem(i){if(await ask('حذف هذه الوثيقة من العنوان؟')){cur.items.splice(i,1);drawItems()}}
-
-function drawItems(){
- const fld=(i,k,l,ex='')=>`<div><label>${l}</label><input ${ex} value="${esc(cur.items[i][k])}" oninput="${k==='num'?'this.value=toEn(this.value);':''}cur.items[${i}].${k}=this.value"></div>`;
- \$('items').innerHTML=cur.items.map((it,i)=>`<div class="item"><div class="ih"><b>وثيقة ${i+1}${it.type||it.type_en?' — '+esc(it.type||it.type_en):''}</b><button class="sm dng" onclick="rmItem(${i})">حذف الوثيقة</button></div>
-  <div class="f2">${fld(i,'type','النوع','list="types" placeholder="هوية / جواز / رخصة..."')}${fld(i,'type_en','Type (English)','dir="ltr" list="types_en" placeholder="ID / Passport / License..."')}
-  ${fld(i,'org','الجهة المصدِّرة')}${fld(i,'org_en','Issuer (English)','dir="ltr"')}
-  ${fld(i,'num','رقم الوثيقة / Document No','dir="ltr"')}${fld(i,'tags','وسوم (بفاصلة) / Tags')}
-  ${['iss','exp'].map(k=>`<div><label>\${k==='iss'?'تاريخ الإصدار / Issue date':'تاريخ الانتهاء / Expiry date'}</label><input dir="ltr" inputmode="numeric" maxlength="10" placeholder="dd-mm-yyyy" value="\${fmtD(it[k])}" oninput="this.value=maskD(this.value);cur.items[${i}].${k}=parseD(this.value)"></div>`).join('')}
-  ${i===0?`<div><label>عنوان السكن (يُدخل مرة واحدة ويُطبع مع كل الوثائق)</label><input value="\${esc(cur.address)}" oninput="cur.address=this.value"></div>
-  <div><label>Address (English)</label><input dir="ltr" value="\${esc(cur.address_en)}" oninput="cur.address_
+function ask(msg, o = {}) {
+  return new Promise(res => {
+    const d = \$('adlg'), i = $('ain');$('amsg').textContent = msg;
+    i.style.display = o.input ? '' : 'none';
+    i.type = o.input || 'text';
+    i.value = '';
+    const done = v => { d.close(); res(v); };
+    \$('aok').onclick = () => done(o.input ? i.value : true);
+    \$('ano').onclick = () => done(o.input ? null : false);
+    d.oncancel = e => { e.preventDefault(); done(o.input ? null :
